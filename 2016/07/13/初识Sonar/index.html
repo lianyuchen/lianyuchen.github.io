@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <title> 初识Sonar · Lian Yuchen </title>
+    <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+<link rel="stylesheet" href="/style/style.css">
+<script src="/script/jquery.min.js"></script>
+<script>
+    var CONFIG = {
+        title: "Lian Yuchen",
+        author: "Lian Yuchen(ShadowHappiness)",
+        lightbox: true,
+        animate: true
+    }
+</script>
+
+
+
+    <link rel="stylesheet" href="/lightbox/css/lightbox.min.css">
+
+
+
+
+    <link rel="stylesheet" href="/syuanpi/syuanpi.min.css">
+
+
+
+
+
+
+
+
+
+    <script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+</head>
+<body>
+    <div class="progress">
+    <div class="progress-inner"></div>
+</div>
+    <div class="body">
+    <div class="tagcloud" id="tagcloud">
+    <div class="tagcloud-inner">
+        <a href="/tags/Android/" style="font-size: 14px;">Android</a> <a href="/tags/Android-Studio/" style="font-size: 14px;">Android Studio</a> <a href="/tags/MVP/" style="font-size: 14px;">MVP</a> <a href="/tags/Mac/" style="font-size: 14px;">Mac</a> <a href="/tags/OkHttp/" style="font-size: 14px;">OkHttp</a> <a href="/tags/RecyclerView/" style="font-size: 14px;">RecyclerView</a> <a href="/tags/Retrofit/" style="font-size: 14px;">Retrofit</a> <a href="/tags/Sonar/" style="font-size: 14px;">Sonar</a> <a href="/tags/java/" style="font-size: 14px;">java</a> <a href="/tags/keystore/" style="font-size: 14px;">keystore</a> <a href="/tags/动画/" style="font-size: 14px;">动画</a> <a href="/tags/属性动画/" style="font-size: 14px;">属性动画</a> <a href="/tags/开发工具/" style="font-size: 14px;">开发工具</a> <a href="/tags/开发环境/" style="font-size: 14px;">开发环境</a> <a href="/tags/快捷键/" style="font-size: 14px;">快捷键</a> <a href="/tags/打包/" style="font-size: 14px;">打包</a> <a href="/tags/框架/" style="font-size: 14px;">框架</a> <a href="/tags/毕设/" style="font-size: 14px;">毕设</a> <a href="/tags/源码解析/" style="font-size: 14px;">源码解析</a> <a href="/tags/第三方分享/" style="font-size: 14px;">第三方分享</a> <a href="/tags/签名/" style="font-size: 14px;">签名</a> <a href="/tags/网络/" style="font-size: 14px;">网络</a>
+    </div>
+</div>
+    <header class="header" id="header">
+    <div class="title syuanpi tvIn">
+    <div class="table">
+        <div class="connect">
+            <div class="connect-inner">
+                <span><a href="/">Lian Yuchen</a></span>
+                
+                    <span id="subtitle">坚持当前所做的事！</span>
+                
+            </div>
+        </div>
+    </div>
+</div>
+    <nav class="main-nav syuanpi tvIn">
+<div class="table">
+
+    <ul class="menu">
+        
+        
+            <li class="menu-item">
+                <a href="/">
+                    <span>文章</span>
+                    
+                        <span class="menu-item-label">article</span>
+                    
+                </a>
+            </li>
+        
+        
+        
+            <li class="menu-item">
+                <a href="/archives">
+                    <span>归档</span>
+                    
+                        <span class="menu-item-label">archives</span>
+                    
+                </a>
+            </li>
+        
+        
+        
+            <li class="menu-item">
+                <a href="javascript:;" id="tags">
+                    <span>标签</span>
+                    
+                        <span class="menu-item-label">tags</span>
+                    
+                </a>
+            </li>
+        
+        
+        
+            <li class="menu-item">
+                <a href="/about">
+                    <span>关于</span>
+                    
+                        <span class="menu-item-label">about</span>
+                    
+                </a>
+            </li>
+        
+        
+    </ul>
+
+</div>
+</nav>
+<div class="mobile-nav"></div>
+</header>
+    <div class="container">
+        <main class="main" id="main">
+            
+    
+    <article class="post">
+        <header class="post-header">
+            <div class="post-time syuanpi riseIn-light back-1">
+                <span>2016年7月13日</span>
+            </div>
+            <h1 class="post-title syuanpi riseIn-light back-2">
+            
+                初识Sonar
+            
+            </h1>
+            
+                
+                    <div class="post-tags syuanpi riseIn-light back-3">
+                    
+                        <a href="/tags/Sonar/">Sonar</a>
+                    
+                    </div>
+                
+            
+        </header>
+        <div class="post-content syuanpi riseIn-light back-3">
+            
+                <h3 id="1-Sonar概述"><a href="#1-Sonar概述" class="headerlink" title="1.Sonar概述"></a>1.Sonar概述</h3><p>Sonar是一个用于代码质量管理的开放平台。通过插件机制，Sonar可以继承不同的测试工具，代码分析工具，以及持续集成工具。<br>与持续集成工具（例如 Hudson/Jenkins 等）不同，Sonar 并不是简单地把不同的代码检查工具结果（例如 FindBugs，PMD 等）直接显示在 Web 页面上，而是通过不同的插件对这些结果进行再加工处理，通过量化的方式度量代码质量的变化，从而可以方便地对不同规模和种类的工程进行代码质量管理。<br><a id="more"></a><br>在对其他工具的支持方面，Sonar 不仅提供了对 IDE 的支持，可以在 Eclipse 和 IntelliJ IDEA 这些工具里联机查看结果；同时 Sonar 还对大量的持续集成工具提供了接口支持，可以很方便地在持续集成中使用 Sonar。<br>此外，Sonar 的插件还可以对 Java 以外的其他编程语言提供支持，对国际化以及报告文档化也有良好的支持。</p>
+<h3 id="2-Sonar的安装"><a href="#2-Sonar的安装" class="headerlink" title="2.Sonar的安装"></a>2.Sonar的安装</h3><p>前提环境：</p>
+<blockquote>
+<p>1.已安装Java环境。<br>2.已安装数据库（本文章中使用mysql数据）。</p>
+</blockquote>
+<p>软件下载地址：<a href="http://www.sonarqube.org/downloads/" target="_blank" rel="external">http://www.sonarqube.org/downloads/</a><br>分别下载SonarQube和SonarQube-Runner。</p>
+<blockquote>
+<p>注意：目前最新版的SonarQube版本为5.6，要求mysql数据库版本在5.6以上，刚开始我用SonarQube5.6的版本，mysql为5.1，sonar服务死活起不了。后来google一下，发现这个问题。于是将sonar版本改为4.5.7。</p>
+</blockquote>
+<p>1.数据库配置：<br>进入数据库：<br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="comment">#mysql -uroot -p[密码]</span></div><div class="line">mysql&gt; CREATE DATABASE sonar CHARACTER SET utf8 COLLATE utf8_general_ci;</div><div class="line">mysql&gt; CREATE USER <span class="string">'sonar'</span> IDENTIFIED BY <span class="string">'sonar'</span>;</div><div class="line">mysql&gt; GRANT ALL ON sonar.* TO <span class="string">'sonar'</span>@<span class="string">'%'</span> IDENTIFIED BY <span class="string">'sonar'</span>;</div><div class="line">mysql&gt; GRANT ALL ON sonar.* TO <span class="string">'sonar'</span>@<span class="string">'localhost'</span> IDENTIFIED BY <span class="string">'sonar'</span>;</div><div class="line">mysql&gt; FLUSH PRIVILEGES;</div></pre></td></tr></table></figure></p>
+<p>2.安装sonarqube和sonar-runner<br>①将下载的sonar-3.7.zip包解压至Linux某路径如/usr/local<br>②将下载的sonar-runner-dist-2.3.zip包解压某路径/usr/local<br>③添加SONAR_HOME、SONAR_RUNNER_HOME环境变量，并将SONAR_RUNNER_HOME加入PATH。如下图</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/1790711-333fa227ffd743ad.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt=""><br>3.修改sonarqube的配置文件<br>sonarqube配置文件位置：<install_directory>/conf/sonar.properties（例如:/usr/local/sonarqube-4.5.7/conf/sonar.properties）<br>该文件中包含配置数据库设置以及web启动的一系列设置。<br>①配置数据库设置：默认已经提供了各类数据库的支持，这里使用mysql，因此取消mysql模块的注释。如下图</install_directory></p>
+<p><img src="http://upload-images.jianshu.io/upload_images/1790711-b429664ffa063242.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt=""><br>②web启动配置：sonar支持类似tomcat服务启动配置一样，默认的端口号为9000，host为localhost。如下图：在这里我把端口号改了，原因是9000端口貌似被占用，因此改为9003.</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/1790711-f3de05ed8cfe6a97.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt=""><br>4.修改sonar-runner的配置文件：<br>sonar-runner配置文件位置：<install_directory>/conf/sonar-scanner.properties（例如：/usr/local/sonar-scanner-2.6.1/conf/sonar-scanner.properties）将默认的注释去掉。如下图：</install_directory></p>
+<p><img src="http://upload-images.jianshu.io/upload_images/1790711-dd3ab9151688f908.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt=""><br>5.启动服务<br>目录切换至sonar的<install_directory>/bin/macosx-universal-64/目录，启动服务<br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="comment">#./sonar.sh start   启动服务</span></div><div class="line"><span class="comment">#./sonar.sh stop    停止服务</span></div><div class="line"><span class="comment">#./sonar.sh restart 重启服务</span></div><div class="line"><span class="comment">#./sonar.sh console 查看控制台</span></div></pre></td></tr></table></figure></install_directory></p>
+<p>至此，sonar就安装好了<br>访问<a href="http://localhost:9003" target="_blank" rel="external">http://localhost:9003</a> 即可</p>
+<p>6.sonar中文补丁包安装中文包安装安装中文补丁包可以通过访问<a href="http://localhost:9003" target="_blank" rel="external">http://localhost:9003</a> ，打开sonar后，进入更新中心安装或者下载中文补丁包后，放到SONARQUBE_HOME/extensions/plugins目录，然后重启SonarQube服务</p>
+
+            
+        
+        </div>
+        
+            
+            
+    <hr class="copy-line">
+    <div class="post-copyright">
+        <div class="copy-author">
+            <span>作者 :</span>
+            <span>Lian Yuchen(ShadowHappiness)</span>
+        </div>
+        <div class="copy-url">
+            <span>地址 :</span>
+            <a href="http://lianyuchen.github.io/2016/07/13/初识Sonar/">http://lianyuchen.github.io/2016/07/13/初识Sonar/</a>
+        </div>
+        <div class="copy-origin">
+            <span>来源 :</span>
+            <a href="http://lianyuchen.github.io">http://lianyuchen.github.io</a>
+        </div>
+        <div class="copy-license">
+            
+            著作权归作者所有，转载请联系作者获得授权。
+        </div>
+    </div>
+
+        
+    </article>
+    
+        
+    <nav class="article-page">
+        
+            <a href="/2016/08/12/从头搭建环境变量/" id="art-left" class="art-right">
+                <span class="next-title">
+                    从头搭建环境变量<i class="iconfont icon-right"></i> 
+                </span>
+            </a>
+        
+        
+            <a href="/2016/04/07/Android接入微信分享过程的喜和泪/" id="art-right" class="art-left">
+                <span class="prev-title"> 
+                    <i class="iconfont icon-left"></i>Android接入微信分享过程的喜和泪
+                </span>
+            </a>
+        
+    </nav>
+
+        
+    
+
+
+        </main>
+        <footer class="footer syuanpi fadeIn" id="footer">
+    <hr>
+    <div class="footer-wrapper">
+        <div class="left">
+            <div class="contact-icon">
+    
+    
+    
+    
+    
+    
+    
+    
+        
+            <a href="https://github.com/lianyuchen" class="iconfont icon-github" title="github"></a>
+        
+        
+        
+        
+        
+        
+        
+    
+</div>
+        </div>
+        <div class="right">
+            <div class="copyright">
+    <div class="info">
+        <span>&copy;</span>
+        <span>2015 ~ 2017</span>
+        <span>❤</span>
+        <span>Lian Yuchen(ShadowHappiness)</span>
+    </div>
+    <div class="theme">
+        <span>
+            动力来源于
+            <a href="http://hexo.io/" target="_blank">Hexo </a>
+        </span>
+        <span>
+            主题
+            <a href="https://github.com/ColMugX/hexo-theme-Nlvi"> Nlvi </a>
+        </span>
+    </div>
+    
+    <div class="visit_count">
+        <i class="iconfont icon-visit"></i>
+        <span id="busuanzi_value_site_uv"></span>
+        <i class="iconfont icon-people"></i>
+        <span id="busuanzi_value_site_pv"></span>
+    </div>
+    
+</div>
+        </div>
+    </div>
+</footer>
+    </div>
+    <script src="/script/nlvi.js"></script>
+
+    <script src="/lightbox/js/lightbox.min.js"></script>
+
+<script>
+$(document).ready(function(){
+    document.body.addEventListener('touchstart', function () {});
+    $('.progress').hide();
+    $('.body').show();
+    Nlvi.tagcloud();
+    Nlvi.back2top();
+    Nlvi.showComments();
+    Nlvi.showReward()
+
+    !CONFIG.animate && Nlvi.offAnimate();
+    CONFIG.lightbox && Nlvi.onPicBox();
+})
+</script>
+    </div>
+    <div class="backtop syuanpi dead" id="backtop">
+    <i class="iconfont icon-up"></i>
+</div>
+</body>
+</html>

@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <title> Android keystore的作用以及如何生成 · Lian Yuchen </title>
+    <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+<link rel="stylesheet" href="/style/style.css">
+<script src="/script/jquery.min.js"></script>
+<script>
+    var CONFIG = {
+        title: "Lian Yuchen",
+        author: "Lian Yuchen(ShadowHappiness)",
+        lightbox: true,
+        animate: true
+    }
+</script>
+
+
+
+    <link rel="stylesheet" href="/lightbox/css/lightbox.min.css">
+
+
+
+
+    <link rel="stylesheet" href="/syuanpi/syuanpi.min.css">
+
+
+
+
+
+
+
+
+
+    <script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+</head>
+<body>
+    <div class="progress">
+    <div class="progress-inner"></div>
+</div>
+    <div class="body">
+    <div class="tagcloud" id="tagcloud">
+    <div class="tagcloud-inner">
+        <a href="/tags/Android/" style="font-size: 14px;">Android</a> <a href="/tags/Android-Studio/" style="font-size: 14px;">Android Studio</a> <a href="/tags/MVP/" style="font-size: 14px;">MVP</a> <a href="/tags/Mac/" style="font-size: 14px;">Mac</a> <a href="/tags/OkHttp/" style="font-size: 14px;">OkHttp</a> <a href="/tags/RecyclerView/" style="font-size: 14px;">RecyclerView</a> <a href="/tags/Retrofit/" style="font-size: 14px;">Retrofit</a> <a href="/tags/Sonar/" style="font-size: 14px;">Sonar</a> <a href="/tags/java/" style="font-size: 14px;">java</a> <a href="/tags/keystore/" style="font-size: 14px;">keystore</a> <a href="/tags/动画/" style="font-size: 14px;">动画</a> <a href="/tags/属性动画/" style="font-size: 14px;">属性动画</a> <a href="/tags/开发工具/" style="font-size: 14px;">开发工具</a> <a href="/tags/开发环境/" style="font-size: 14px;">开发环境</a> <a href="/tags/快捷键/" style="font-size: 14px;">快捷键</a> <a href="/tags/打包/" style="font-size: 14px;">打包</a> <a href="/tags/框架/" style="font-size: 14px;">框架</a> <a href="/tags/毕设/" style="font-size: 14px;">毕设</a> <a href="/tags/源码解析/" style="font-size: 14px;">源码解析</a> <a href="/tags/第三方分享/" style="font-size: 14px;">第三方分享</a> <a href="/tags/签名/" style="font-size: 14px;">签名</a> <a href="/tags/网络/" style="font-size: 14px;">网络</a>
+    </div>
+</div>
+    <header class="header" id="header">
+    <div class="title syuanpi tvIn">
+    <div class="table">
+        <div class="connect">
+            <div class="connect-inner">
+                <span><a href="/">Lian Yuchen</a></span>
+                
+                    <span id="subtitle">坚持当前所做的事！</span>
+                
+            </div>
+        </div>
+    </div>
+</div>
+    <nav class="main-nav syuanpi tvIn">
+<div class="table">
+
+    <ul class="menu">
+        
+        
+            <li class="menu-item">
+                <a href="/">
+                    <span>文章</span>
+                    
+                        <span class="menu-item-label">article</span>
+                    
+                </a>
+            </li>
+        
+        
+        
+            <li class="menu-item">
+                <a href="/archives">
+                    <span>归档</span>
+                    
+                        <span class="menu-item-label">archives</span>
+                    
+                </a>
+            </li>
+        
+        
+        
+            <li class="menu-item">
+                <a href="javascript:;" id="tags">
+                    <span>标签</span>
+                    
+                        <span class="menu-item-label">tags</span>
+                    
+                </a>
+            </li>
+        
+        
+        
+            <li class="menu-item">
+                <a href="/about">
+                    <span>关于</span>
+                    
+                        <span class="menu-item-label">about</span>
+                    
+                </a>
+            </li>
+        
+        
+    </ul>
+
+</div>
+</nav>
+<div class="mobile-nav"></div>
+</header>
+    <div class="container">
+        <main class="main" id="main">
+            
+    
+    <article class="post">
+        <header class="post-header">
+            <div class="post-time syuanpi riseIn-light back-1">
+                <span>2016年3月25日</span>
+            </div>
+            <h1 class="post-title syuanpi riseIn-light back-2">
+            
+                Android keystore的作用以及如何生成
+            
+            </h1>
+            
+                
+                    <div class="post-tags syuanpi riseIn-light back-3">
+                    
+                        <a href="/tags/Android/">Android</a>
+                    
+                        <a href="/tags/Android-Studio/">Android Studio</a>
+                    
+                        <a href="/tags/keystore/">keystore</a>
+                    
+                    </div>
+                
+            
+        </header>
+        <div class="post-content syuanpi riseIn-light back-3">
+            
+                <h3 id="程序使用keystore的好处"><a href="#程序使用keystore的好处" class="headerlink" title="程序使用keystore的好处"></a>程序使用keystore的好处</h3><p><strong> (1)有利于程序升级 </strong></p>
+<p>当新版程序和旧版程序的数字证书相同时，Android系统才会认为这两个程序是同一个程序的不同版本。如果新版程序和旧版程序的数字证书不相同，则Android系统认为他们是不同的程序，并产生冲突，会要求新程序更改包名。</p>
+<p><strong> (2)有利于程序的模块化设计和开发。</strong><br><a id="more"></a></p>
+<p>Android系统允许拥有同一个数字签名的程序运行在一个进程中，Android程序会将他们视为同一个程序。所以开发者可以将自己的程序分模块开发，而用户只需要在需要的时候下载适当的模块。</p>
+<p><strong> (3)可以通过权限(permission)的方式在多个程序间共享数据和代码。</strong></p>
+<p>Android提供了基于数字证书的权限赋予机制，应用程序可以和其他的程序共享概功能或者数据给那那些与自己拥有相同数字证书的程序。如果某个权限(permission)的protectionLevel是signature，则这个权限就只能授予那些跟该权限所在的包拥有同一个数字证书的程序。</p>
+<h3 id="keystore的两种模式"><a href="#keystore的两种模式" class="headerlink" title="keystore的两种模式"></a>keystore的两种模式</h3><p><strong> 调试模式(debug mode)</strong>和<strong>发布模式(release mode)</strong></p>
+<p><strong> (1)调试模式(debug mode)</strong>：在调试模式下， Android Studio会自动的使用debug密钥为应用程序签名，因此我们可以直接运行程序。</p>
+<p><strong> (2)发布模式(release mode)</strong>：当要发布程序时，开发者就需要使用自己的数字证书给apk包签名。</p>
+<h3 id="Android-Studio生成keystore"><a href="#Android-Studio生成keystore" class="headerlink" title="Android Studio生成keystore"></a>Android Studio生成keystore</h3><ol>
+<li>点击Build ,在下拉框中选择 “Generate Signed APK”</li>
+</ol>
+<p><img src="http://upload-images.jianshu.io/upload_images/1790711-09c4ff23205c5de3.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt=""></p>
+<ol>
+<li>选择 “Create new”</li>
+</ol>
+<p><img src="http://upload-images.jianshu.io/upload_images/1790711-442d8886e63d6b55.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt=""></p>
+<ol>
+<li>按照里面的内容填写即可</li>
+</ol>
+<p><img src="http://upload-images.jianshu.io/upload_images/1790711-9c39eb50dd087418.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt=""></p>
+<ol>
+<li>选择何种模式的签名</li>
+</ol>
+<p><img src="http://upload-images.jianshu.io/upload_images/1790711-dd6a915046bca4c3.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt=""></p>
+<p>在这个窗体中可以选择签名的模式，debug和release 模式。完成点击finish</p>
+<p>在这篇文章中先介绍这些，下一篇讲如何在Android Studio中自动签名打包APK。</p>
+
+            
+        
+        </div>
+        
+            
+            
+    <hr class="copy-line">
+    <div class="post-copyright">
+        <div class="copy-author">
+            <span>作者 :</span>
+            <span>Lian Yuchen(ShadowHappiness)</span>
+        </div>
+        <div class="copy-url">
+            <span>地址 :</span>
+            <a href="http://lianyuchen.github.io/2016/03/25/keystore的作用以及如何生成/">http://lianyuchen.github.io/2016/03/25/keystore的作用以及如何生成/</a>
+        </div>
+        <div class="copy-origin">
+            <span>来源 :</span>
+            <a href="http://lianyuchen.github.io">http://lianyuchen.github.io</a>
+        </div>
+        <div class="copy-license">
+            
+            著作权归作者所有，转载请联系作者获得授权。
+        </div>
+    </div>
+
+        
+    </article>
+    
+        
+    <nav class="article-page">
+        
+            <a href="/2016/03/25/Studio中自动签名并打包/" id="art-left" class="art-right">
+                <span class="next-title">
+                    Android Studio中自动签名并打包<i class="iconfont icon-right"></i> 
+                </span>
+            </a>
+        
+        
+            <a href="/2016/03/23/Java程序的顺序问题/" id="art-right" class="art-left">
+                <span class="prev-title"> 
+                    <i class="iconfont icon-left"></i>Java程序的顺序问题
+                </span>
+            </a>
+        
+    </nav>
+
+        
+    
+
+
+        </main>
+        <footer class="footer syuanpi fadeIn" id="footer">
+    <hr>
+    <div class="footer-wrapper">
+        <div class="left">
+            <div class="contact-icon">
+    
+    
+    
+    
+    
+    
+    
+    
+        
+            <a href="https://github.com/lianyuchen" class="iconfont icon-github" title="github"></a>
+        
+        
+        
+        
+        
+        
+        
+    
+</div>
+        </div>
+        <div class="right">
+            <div class="copyright">
+    <div class="info">
+        <span>&copy;</span>
+        <span>2015 ~ 2017</span>
+        <span>❤</span>
+        <span>Lian Yuchen(ShadowHappiness)</span>
+    </div>
+    <div class="theme">
+        <span>
+            动力来源于
+            <a href="http://hexo.io/" target="_blank">Hexo </a>
+        </span>
+        <span>
+            主题
+            <a href="https://github.com/ColMugX/hexo-theme-Nlvi"> Nlvi </a>
+        </span>
+    </div>
+    
+    <div class="visit_count">
+        <i class="iconfont icon-visit"></i>
+        <span id="busuanzi_value_site_uv"></span>
+        <i class="iconfont icon-people"></i>
+        <span id="busuanzi_value_site_pv"></span>
+    </div>
+    
+</div>
+        </div>
+    </div>
+</footer>
+    </div>
+    <script src="/script/nlvi.js"></script>
+
+    <script src="/lightbox/js/lightbox.min.js"></script>
+
+<script>
+$(document).ready(function(){
+    document.body.addEventListener('touchstart', function () {});
+    $('.progress').hide();
+    $('.body').show();
+    Nlvi.tagcloud();
+    Nlvi.back2top();
+    Nlvi.showComments();
+    Nlvi.showReward()
+
+    !CONFIG.animate && Nlvi.offAnimate();
+    CONFIG.lightbox && Nlvi.onPicBox();
+})
+</script>
+    </div>
+    <div class="backtop syuanpi dead" id="backtop">
+    <i class="iconfont icon-up"></i>
+</div>
+</body>
+</html>

@@ -1,0 +1,322 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <title> Android开发中一些好用的小工具 · Lian Yuchen </title>
+    <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+<link rel="stylesheet" href="/style/style.css">
+<script src="/script/jquery.min.js"></script>
+<script>
+    var CONFIG = {
+        title: "Lian Yuchen",
+        author: "Lian Yuchen(ShadowHappiness)",
+        lightbox: true,
+        animate: true
+    }
+</script>
+
+
+
+    <link rel="stylesheet" href="/lightbox/css/lightbox.min.css">
+
+
+
+
+    <link rel="stylesheet" href="/syuanpi/syuanpi.min.css">
+
+
+
+
+
+
+
+
+
+    <script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+</head>
+<body>
+    <div class="progress">
+    <div class="progress-inner"></div>
+</div>
+    <div class="body">
+    <div class="tagcloud" id="tagcloud">
+    <div class="tagcloud-inner">
+        <a href="/tags/Android/" style="font-size: 14px;">Android</a> <a href="/tags/Android-Studio/" style="font-size: 14px;">Android Studio</a> <a href="/tags/MVP/" style="font-size: 14px;">MVP</a> <a href="/tags/Mac/" style="font-size: 14px;">Mac</a> <a href="/tags/OkHttp/" style="font-size: 14px;">OkHttp</a> <a href="/tags/RecyclerView/" style="font-size: 14px;">RecyclerView</a> <a href="/tags/Retrofit/" style="font-size: 14px;">Retrofit</a> <a href="/tags/Sonar/" style="font-size: 14px;">Sonar</a> <a href="/tags/java/" style="font-size: 14px;">java</a> <a href="/tags/keystore/" style="font-size: 14px;">keystore</a> <a href="/tags/动画/" style="font-size: 14px;">动画</a> <a href="/tags/属性动画/" style="font-size: 14px;">属性动画</a> <a href="/tags/开发工具/" style="font-size: 14px;">开发工具</a> <a href="/tags/开发环境/" style="font-size: 14px;">开发环境</a> <a href="/tags/快捷键/" style="font-size: 14px;">快捷键</a> <a href="/tags/打包/" style="font-size: 14px;">打包</a> <a href="/tags/框架/" style="font-size: 14px;">框架</a> <a href="/tags/毕设/" style="font-size: 14px;">毕设</a> <a href="/tags/源码解析/" style="font-size: 14px;">源码解析</a> <a href="/tags/第三方分享/" style="font-size: 14px;">第三方分享</a> <a href="/tags/签名/" style="font-size: 14px;">签名</a> <a href="/tags/网络/" style="font-size: 14px;">网络</a>
+    </div>
+</div>
+    <header class="header" id="header">
+    <div class="title syuanpi tvIn">
+    <div class="table">
+        <div class="connect">
+            <div class="connect-inner">
+                <span><a href="/">Lian Yuchen</a></span>
+                
+                    <span id="subtitle">坚持当前所做的事！</span>
+                
+            </div>
+        </div>
+    </div>
+</div>
+    <nav class="main-nav syuanpi tvIn">
+<div class="table">
+
+    <ul class="menu">
+        
+        
+            <li class="menu-item">
+                <a href="/">
+                    <span>文章</span>
+                    
+                        <span class="menu-item-label">article</span>
+                    
+                </a>
+            </li>
+        
+        
+        
+            <li class="menu-item">
+                <a href="/archives">
+                    <span>归档</span>
+                    
+                        <span class="menu-item-label">archives</span>
+                    
+                </a>
+            </li>
+        
+        
+        
+            <li class="menu-item">
+                <a href="javascript:;" id="tags">
+                    <span>标签</span>
+                    
+                        <span class="menu-item-label">tags</span>
+                    
+                </a>
+            </li>
+        
+        
+        
+            <li class="menu-item">
+                <a href="/about">
+                    <span>关于</span>
+                    
+                        <span class="menu-item-label">about</span>
+                    
+                </a>
+            </li>
+        
+        
+    </ul>
+
+</div>
+</nav>
+<div class="mobile-nav"></div>
+</header>
+    <div class="container">
+        <main class="main" id="main">
+            
+    
+    <article class="post">
+        <header class="post-header">
+            <div class="post-time syuanpi riseIn-light back-1">
+                <span>2016年8月31日</span>
+            </div>
+            <h1 class="post-title syuanpi riseIn-light back-2">
+            
+                Android开发中一些好用的小工具
+            
+            </h1>
+            
+                
+                    <div class="post-tags syuanpi riseIn-light back-3">
+                    
+                        <a href="/tags/Android/">Android</a>
+                    
+                        <a href="/tags/开发工具/">开发工具</a>
+                    
+                    </div>
+                
+            
+        </header>
+        <div class="post-content syuanpi riseIn-light back-3">
+            
+                <p>背景：最近在写一个关于Google Meterial Design的小demo，在学习的过程中，发现从头开始建立Project，以及在gradle中导入各种包的重复性操作，让我倍感头疼，于是想写一篇文章，用来记录这些重复性操作的步骤，以便之后的小项目可以Ctrl+C 、Ctrl+V(俗话说：不会偷懒的程序员不是好程序员。。。)</p>
+<a id="more"></a>
+<p>本文由于是描述有关Google Meterial Design的小demo，便使用该demo中的引用包</p>
+<blockquote>
+<p>compile ‘com.android.support:appcompat-v7:24.0.0’</p>
+</blockquote>
+<p>这个support包不用多解释，使用android studio在创建project时便会自动导入该support包。</p>
+<blockquote>
+<p>compile ‘com.android.support:recyclerview-v7:24.0.0’</p>
+</blockquote>
+<p>从名称中便可以看出，如果在项目中想要使用recyclerview，便要再builde.gradle文件中添加该support包。</p>
+<blockquote>
+<p>compile ‘com.android.support:design:24.0.0’</p>
+</blockquote>
+<p>这个支持包是重点，因为项目是基于Meterial Design的风格，Google在该支持包中封装了许多样式以及主题，要学习Google Meterial Design该支持包必不可少。</p>
+<blockquote>
+<p>apply plugin: ‘android-apt’<br>（这行代码应在主moudule下build.gradle中先声明该插件）<br>compile ‘com.jakewharton:butterknife:8.4.0’<br>apt ‘com.jakewharton:butterknife-compiler:8.4.0’<br>（这两行代码应在主moudule下build.gradle中dependencies节点添加）<br>classpath ‘com.neenbedankt.gradle.plugins:android-apt:1.8’<br>（这行代码应在Project目录下的build.gradle中dependencies节点添加）</p>
+</blockquote>
+<p>这个工具算是非常流行，是JakeWharton大神的杰作，可以用于快速根据布局文件id绑定，生成代码，不过butterknife在8.0以上的版本于之前版本的配置稍微不同。附上ButterKnife的GitHub网址：<a href="https://github.com/JakeWharton/butterknife" target="_blank" rel="external">https://github.com/JakeWharton/butterknife</a><br>在项目代码中引入了这些包还不够，需要在android studio中添加Android ButterKnife Zelezny这个插件。添加插件步骤如下：<br>1.打开android studio的Preference，选择Plugins</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/1790711-e1d6511623939653.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt=""></p>
+<p>2.点击Browse repository，在搜索框中输入Butter，自动便会出来Android ButterKnife Zelezny，点击install即可。</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/1790711-163bdf4bd83595b8.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt=""></p>
+<p>到此，在项目代码中便可使用butterKnife了，赶紧试一试吧。<br>将光标只在布局文件的位置，快捷键command+N，选择Butterknife一项，选择是否需要点击事件以及编辑需要修改的变量名，点击Confirm即可。<br><img src="http://upload-images.jianshu.io/upload_images/1790711-c62d69c74207cc71.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt=""></p>
+<p><img src="http://upload-images.jianshu.io/upload_images/1790711-6344262e4d3d9a25.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt=""></p>
+<blockquote>
+<p>debugCompile ‘com.squareup.leakcanary:leakcanary-android:1.4-beta2’<br>releaseCompile ‘com.squareup.leakcanary:leakcanary-android-no-op:1.4-beta2’<br>testCompile ‘com.squareup.leakcanary:leakcanary-android-no-op:1.4-beta2’</p>
+</blockquote>
+<p>这是用来检测内存泄露的工具，是square公司的作品。在代码中只需在应用的application中的onCreate方法中调用<br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">LeakCanary.install(this);</div></pre></td></tr></table></figure></p>
+<p>便可以监控所有的Activity的内存泄露情况。附上LeakCanary的Github网址：<a href="https://github.com/square/leakcanary" target="_blank" rel="external">https://github.com/square/leakcanary</a></p>
+<p>以上便是本次小demo中引用到的支持包以及第三方包，下面介绍几个Android Studio中的几个好用的插件：</p>
+<ol>
+<li>Android ButterKnife Zelezny（上文已经描述过，此处不再详细复述）</li>
+<li>ADB Idea（在项目运行中很好用的一个adb工具，提供了快捷键杀死app，重启app，清空缓存等）<br> 使用如下：在代码中使用快捷键ctrl+shift+A，选择你需要的功能。</li>
+</ol>
+<p><img src="http://upload-images.jianshu.io/upload_images/1790711-6b463012c72b07a0.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt=""></p>
+<ol>
+<li>GsonFormat（Json字符串转化为实体Bean的神器）<br>使用如下：复制一段Json字符串，新建一个Javabean，在代码中使用快捷键command+N，选择GsonFormat，将复制的Json字符串粘贴进编辑框中，点击OK即可。</li>
+</ol>
+<p><img src="http://upload-images.jianshu.io/upload_images/1790711-ac0d6c36dd095001.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt=""></p>
+<p><img src="http://upload-images.jianshu.io/upload_images/1790711-a17c1f2f7efd4b29.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt=""></p>
+<p><img src="http://upload-images.jianshu.io/upload_images/1790711-ba41255362bb6d36.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt=""></p>
+<p>上述插件均可按照添加Android ButterKnife Zelezny插件的步骤来完成。<br>还等什么呢！赶快去试一试吧！！</p>
+
+            
+        
+        </div>
+        
+            
+            
+    <hr class="copy-line">
+    <div class="post-copyright">
+        <div class="copy-author">
+            <span>作者 :</span>
+            <span>Lian Yuchen(ShadowHappiness)</span>
+        </div>
+        <div class="copy-url">
+            <span>地址 :</span>
+            <a href="http://lianyuchen.github.io/2016/08/31/Android开发中一些好用的小工具/">http://lianyuchen.github.io/2016/08/31/Android开发中一些好用的小工具/</a>
+        </div>
+        <div class="copy-origin">
+            <span>来源 :</span>
+            <a href="http://lianyuchen.github.io">http://lianyuchen.github.io</a>
+        </div>
+        <div class="copy-license">
+            
+            著作权归作者所有，转载请联系作者获得授权。
+        </div>
+    </div>
+
+        
+    </article>
+    
+        
+    <nav class="article-page">
+        
+            <a href="/2016/11/22/2016-11-22随笔-Android翻转动画/" id="art-left" class="art-right">
+                <span class="next-title">
+                    2016.11.22随笔-Android翻转动画<i class="iconfont icon-right"></i> 
+                </span>
+            </a>
+        
+        
+            <a href="/2016/08/12/从头搭建环境变量/" id="art-right" class="art-left">
+                <span class="prev-title"> 
+                    <i class="iconfont icon-left"></i>从头搭建环境变量
+                </span>
+            </a>
+        
+    </nav>
+
+        
+    
+
+
+        </main>
+        <footer class="footer syuanpi fadeIn" id="footer">
+    <hr>
+    <div class="footer-wrapper">
+        <div class="left">
+            <div class="contact-icon">
+    
+    
+    
+    
+    
+    
+    
+    
+        
+            <a href="https://github.com/lianyuchen" class="iconfont icon-github" title="github"></a>
+        
+        
+        
+        
+        
+        
+        
+    
+</div>
+        </div>
+        <div class="right">
+            <div class="copyright">
+    <div class="info">
+        <span>&copy;</span>
+        <span>2015 ~ 2017</span>
+        <span>❤</span>
+        <span>Lian Yuchen(ShadowHappiness)</span>
+    </div>
+    <div class="theme">
+        <span>
+            动力来源于
+            <a href="http://hexo.io/" target="_blank">Hexo </a>
+        </span>
+        <span>
+            主题
+            <a href="https://github.com/ColMugX/hexo-theme-Nlvi"> Nlvi </a>
+        </span>
+    </div>
+    
+    <div class="visit_count">
+        <i class="iconfont icon-visit"></i>
+        <span id="busuanzi_value_site_uv"></span>
+        <i class="iconfont icon-people"></i>
+        <span id="busuanzi_value_site_pv"></span>
+    </div>
+    
+</div>
+        </div>
+    </div>
+</footer>
+    </div>
+    <script src="/script/nlvi.js"></script>
+
+    <script src="/lightbox/js/lightbox.min.js"></script>
+
+<script>
+$(document).ready(function(){
+    document.body.addEventListener('touchstart', function () {});
+    $('.progress').hide();
+    $('.body').show();
+    Nlvi.tagcloud();
+    Nlvi.back2top();
+    Nlvi.showComments();
+    Nlvi.showReward()
+
+    !CONFIG.animate && Nlvi.offAnimate();
+    CONFIG.lightbox && Nlvi.onPicBox();
+})
+</script>
+    </div>
+    <div class="backtop syuanpi dead" id="backtop">
+    <i class="iconfont icon-up"></i>
+</div>
+</body>
+</html>

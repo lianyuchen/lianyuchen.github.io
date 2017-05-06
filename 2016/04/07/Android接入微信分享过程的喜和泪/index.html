@@ -1,0 +1,339 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <title> Android接入微信分享过程的喜和泪 · Lian Yuchen </title>
+    <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+<link rel="stylesheet" href="/style/style.css">
+<script src="/script/jquery.min.js"></script>
+<script>
+    var CONFIG = {
+        title: "Lian Yuchen",
+        author: "Lian Yuchen(ShadowHappiness)",
+        lightbox: true,
+        animate: true
+    }
+</script>
+
+
+
+    <link rel="stylesheet" href="/lightbox/css/lightbox.min.css">
+
+
+
+
+    <link rel="stylesheet" href="/syuanpi/syuanpi.min.css">
+
+
+
+
+
+
+
+
+
+    <script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+</head>
+<body>
+    <div class="progress">
+    <div class="progress-inner"></div>
+</div>
+    <div class="body">
+    <div class="tagcloud" id="tagcloud">
+    <div class="tagcloud-inner">
+        <a href="/tags/Android/" style="font-size: 14px;">Android</a> <a href="/tags/Android-Studio/" style="font-size: 14px;">Android Studio</a> <a href="/tags/MVP/" style="font-size: 14px;">MVP</a> <a href="/tags/Mac/" style="font-size: 14px;">Mac</a> <a href="/tags/OkHttp/" style="font-size: 14px;">OkHttp</a> <a href="/tags/RecyclerView/" style="font-size: 14px;">RecyclerView</a> <a href="/tags/Retrofit/" style="font-size: 14px;">Retrofit</a> <a href="/tags/Sonar/" style="font-size: 14px;">Sonar</a> <a href="/tags/java/" style="font-size: 14px;">java</a> <a href="/tags/keystore/" style="font-size: 14px;">keystore</a> <a href="/tags/动画/" style="font-size: 14px;">动画</a> <a href="/tags/属性动画/" style="font-size: 14px;">属性动画</a> <a href="/tags/开发工具/" style="font-size: 14px;">开发工具</a> <a href="/tags/开发环境/" style="font-size: 14px;">开发环境</a> <a href="/tags/快捷键/" style="font-size: 14px;">快捷键</a> <a href="/tags/打包/" style="font-size: 14px;">打包</a> <a href="/tags/框架/" style="font-size: 14px;">框架</a> <a href="/tags/毕设/" style="font-size: 14px;">毕设</a> <a href="/tags/源码解析/" style="font-size: 14px;">源码解析</a> <a href="/tags/第三方分享/" style="font-size: 14px;">第三方分享</a> <a href="/tags/签名/" style="font-size: 14px;">签名</a> <a href="/tags/网络/" style="font-size: 14px;">网络</a>
+    </div>
+</div>
+    <header class="header" id="header">
+    <div class="title syuanpi tvIn">
+    <div class="table">
+        <div class="connect">
+            <div class="connect-inner">
+                <span><a href="/">Lian Yuchen</a></span>
+                
+                    <span id="subtitle">坚持当前所做的事！</span>
+                
+            </div>
+        </div>
+    </div>
+</div>
+    <nav class="main-nav syuanpi tvIn">
+<div class="table">
+
+    <ul class="menu">
+        
+        
+            <li class="menu-item">
+                <a href="/">
+                    <span>文章</span>
+                    
+                        <span class="menu-item-label">article</span>
+                    
+                </a>
+            </li>
+        
+        
+        
+            <li class="menu-item">
+                <a href="/archives">
+                    <span>归档</span>
+                    
+                        <span class="menu-item-label">archives</span>
+                    
+                </a>
+            </li>
+        
+        
+        
+            <li class="menu-item">
+                <a href="javascript:;" id="tags">
+                    <span>标签</span>
+                    
+                        <span class="menu-item-label">tags</span>
+                    
+                </a>
+            </li>
+        
+        
+        
+            <li class="menu-item">
+                <a href="/about">
+                    <span>关于</span>
+                    
+                        <span class="menu-item-label">about</span>
+                    
+                </a>
+            </li>
+        
+        
+    </ul>
+
+</div>
+</nav>
+<div class="mobile-nav"></div>
+</header>
+    <div class="container">
+        <main class="main" id="main">
+            
+    
+    <article class="post">
+        <header class="post-header">
+            <div class="post-time syuanpi riseIn-light back-1">
+                <span>2016年4月7日</span>
+            </div>
+            <h1 class="post-title syuanpi riseIn-light back-2">
+            
+                Android接入微信分享过程的喜和泪
+            
+            </h1>
+            
+                
+                    <div class="post-tags syuanpi riseIn-light back-3">
+                    
+                        <a href="/tags/Android/">Android</a>
+                    
+                        <a href="/tags/第三方分享/">第三方分享</a>
+                    
+                    </div>
+                
+            
+        </header>
+        <div class="post-content syuanpi riseIn-light back-3">
+            
+                <h2 id="背景故事："><a href="#背景故事：" class="headerlink" title="背景故事："></a>背景故事：</h2><p>4月份从公司回到学校，要开始着手做大四的毕业设计。然而毕设的其中一个功能模块便是——心情分享模块，在记录心情的同时可以把心情分享到朋友圈、空间、微博等。因此，便开始了微信分享的学习之旅。</p>
+<a id="more"></a>
+<h2 id="准备工作："><a href="#准备工作：" class="headerlink" title="准备工作："></a>准备工作：</h2><h4 id="1-在微信开发平台注册一个开发者账号。"><a href="#1-在微信开发平台注册一个开发者账号。" class="headerlink" title="1.在微信开发平台注册一个开发者账号。"></a>1.在微信开发平台注册一个开发者账号。</h4><h4 id="2-在管理中心创建一个移动应用"><a href="#2-在管理中心创建一个移动应用" class="headerlink" title="2.在管理中心创建一个移动应用"></a>2.在管理中心创建一个移动应用</h4><p><img src="http://upload-images.jianshu.io/upload_images/1790711-0431065dc7a45aa3.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="Paste_Image.png"></p>
+<p><img src="http://upload-images.jianshu.io/upload_images/1790711-7f2d0c248604f6ca.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="Paste_Image.png"></p>
+<blockquote>
+<p>泪：当时我在填写应用签名时，是直接将签名文件中的内容复制，粘贴到该输入框中，因为这个，我走了一天的弯路啊！在这重点提醒大家，该应用签名，应该是使用MD5签名生成器.apk，输入你的应用包名，然后生成出来的MD5签名，是一个32位的小写字母和数字的组合的字符串！！</p>
+</blockquote>
+<h4 id="3-提交审核（这个审核过程时间多久，微信官方说是一周左右）"><a href="#3-提交审核（这个审核过程时间多久，微信官方说是一周左右）" class="headerlink" title="3.提交审核（这个审核过程时间多久，微信官方说是一周左右）"></a>3.提交审核（这个审核过程时间多久，微信官方说是一周左右）</h4><h4 id="4-下载微信终端开发工具包开发工具包"><a href="#4-下载微信终端开发工具包开发工具包" class="headerlink" title="4.下载微信终端开发工具包开发工具包"></a>4.下载微信终端开发工具包开发工具包</h4><p>主要包含3部分内容：（其中，只有libammsdk.jar是必须的）</p>
+<ul>
+<li>libammsdk.jar（每个第三方应用必须要导入该sdk库，用于实现与微信的通信）</li>
+<li>API文档（供开发者查阅使用）</li>
+<li>界面小工具源码（封装了界面表现的工具类，以及一些界面风格）</li>
+</ul>
+<p>到此，有关微信开放平台上的准备工作基本已经结束。</p>
+<h3 id="开始接入微信分享："><a href="#开始接入微信分享：" class="headerlink" title="开始接入微信分享："></a>开始接入微信分享：</h3><p>我们做接入第三方sdk，基本上都是从其提供的示例代码中入手。于是乎，我就先从导入示例代码，跑起demo来看看效果。导入项目这个步骤不属于本次文章的范畴，在此就先跳过。。。<br><img src="http://upload-images.jianshu.io/upload_images/1790711-600ee8fb92b5a32f.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="Paste_Image.png"></p>
+<blockquote>
+<p>泪：然而我运行在手机上时，却遇到发送消息不弹出微信界面的问题。上网查找资料后，原来是因为eclipse默认的打包运行的签名文件是.android/debug.keystore，我们需要修改微信示例代码中提供给我们的签名文件。</p>
+</blockquote>
+<hr>
+<blockquote>
+<p>1.选择Eclipse顶部菜单Window-&gt;Preferences，在弹出的对话框中，选择Android目录下的Build，如下图</p>
+</blockquote>
+<p><img src="http://upload-images.jianshu.io/upload_images/1790711-156b9f8a6804087f.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="Paste_Image.png"></p>
+<blockquote>
+<p>2.指定Custom debug keystore选项的路径为sdk demo工程目录中的debug.keystore文件，如下图：</p>
+</blockquote>
+<p><img src="http://upload-images.jianshu.io/upload_images/1790711-038e542f013754c4.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="Paste_Image.png"></p>
+<blockquote>
+<p>3.运行该demo</p>
+</blockquote>
+<p>可参照官方文档：<a href="https://open.weixin.qq.com/zh_CN/htmledition/res/assets/run-android-sdk-sample.doc" target="_blank" rel="external">《如何运行SDK Demo工程》</a></p>
+<h4 id="微信给的示例代码是用eclipse来运行，然而现在谁还在用eclipse啊，都是用Android-Studio，于是我便用Android-Studio来接入sdk。"><a href="#微信给的示例代码是用eclipse来运行，然而现在谁还在用eclipse啊，都是用Android-Studio，于是我便用Android-Studio来接入sdk。" class="headerlink" title="微信给的示例代码是用eclipse来运行，然而现在谁还在用eclipse啊，都是用Android Studio，于是我便用Android Studio来接入sdk。"></a>微信给的示例代码是用eclipse来运行，然而现在谁还在用eclipse啊，都是用Android Studio，于是我便用Android Studio来接入sdk。</h4><blockquote>
+<p>1.在主module下建立lib包，将libammsdk.jar粘贴到该包下。在grade配置文件加入下列代码，编译。</p>
+</blockquote>
+<p><img src="http://upload-images.jianshu.io/upload_images/1790711-2105497858bfaf60.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="Paste_Image.png"></p>
+<blockquote>
+<p>2.在项目的Application创建调用微信的Api，并在应用启动的时候将应用注册到微信，如图：</p>
+</blockquote>
+<p><img src="http://upload-images.jianshu.io/upload_images/1790711-06e9eaf7e3fb1c4e.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="Paste_Image.png"></p>
+<blockquote>
+<p>3.在AndroidManifest.xml中声明相应的权限：</p>
+</blockquote>
+<p><img src="http://upload-images.jianshu.io/upload_images/1790711-f4f4383af2628460.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="Paste_Image.png"></p>
+<blockquote>
+<p>4.在需要分享的逻辑中使用api.send(req)方法：</p>
+</blockquote>
+<p><img src="http://upload-images.jianshu.io/upload_images/1790711-1fa89b0db5a59d5c.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="Paste_Image.png"></p>
+<blockquote>
+<p>5.项目跑起来！！</p>
+</blockquote>
+<p><img src="http://upload-images.jianshu.io/upload_images/1790711-943186aaaef53919.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="screenshot_meitu_2.jpg"></p>
+<blockquote>
+<p>泪：然而我点击分享到朋友圈并不能成功打开微信页面。在上面已经说了，打不开微信页面，第一种情况是微信开放平台上输入的签名不对。当修改好开放平台上的签名后，重新运行app，依旧打不开微信的页面。这是由于微信自身有缓存，在前面微信已经记录了之前错误的签名，因此换了正式的keystore来分享显示的还会是被微信拒绝，就算重启微信重启手机也不管用，那你就要清空微信的数据或者重装微信。</p>
+</blockquote>
+<p>当这些都完成之后，我再点击分享试试：<br><img src="http://upload-images.jianshu.io/upload_images/1790711-86f95913b06601f8.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="screenshot (1)_meitu_3.jpg"></p>
+<blockquote>
+<p>喜：大功告成！！！</p>
+</blockquote>
+<h3 id="过程虽然挺悲剧，但是结局是好的～～～"><a href="#过程虽然挺悲剧，但是结局是好的～～～" class="headerlink" title="过程虽然挺悲剧，但是结局是好的～～～"></a>过程虽然挺悲剧，但是结局是好的～～～</h3><p>好了，我继续去做我的毕设了，还有QQ，Qzone，微博等分享呢。。。但是我相信，有了之前的坑，应该可以走不少捷径了吧。</p>
+
+            
+        
+        </div>
+        
+            
+            
+    <hr class="copy-line">
+    <div class="post-copyright">
+        <div class="copy-author">
+            <span>作者 :</span>
+            <span>Lian Yuchen(ShadowHappiness)</span>
+        </div>
+        <div class="copy-url">
+            <span>地址 :</span>
+            <a href="http://lianyuchen.github.io/2016/04/07/Android接入微信分享过程的喜和泪/">http://lianyuchen.github.io/2016/04/07/Android接入微信分享过程的喜和泪/</a>
+        </div>
+        <div class="copy-origin">
+            <span>来源 :</span>
+            <a href="http://lianyuchen.github.io">http://lianyuchen.github.io</a>
+        </div>
+        <div class="copy-license">
+            
+            著作权归作者所有，转载请联系作者获得授权。
+        </div>
+    </div>
+
+        
+    </article>
+    
+        
+    <nav class="article-page">
+        
+            <a href="/2016/07/13/初识Sonar/" id="art-left" class="art-right">
+                <span class="next-title">
+                    初识Sonar<i class="iconfont icon-right"></i> 
+                </span>
+            </a>
+        
+        
+            <a href="/2016/03/29/毕业设计-“日程盒子”/" id="art-right" class="art-left">
+                <span class="prev-title"> 
+                    <i class="iconfont icon-left"></i>毕业设计--“日程盒子”
+                </span>
+            </a>
+        
+    </nav>
+
+        
+    
+
+
+        </main>
+        <footer class="footer syuanpi fadeIn" id="footer">
+    <hr>
+    <div class="footer-wrapper">
+        <div class="left">
+            <div class="contact-icon">
+    
+    
+    
+    
+    
+    
+    
+    
+        
+            <a href="https://github.com/lianyuchen" class="iconfont icon-github" title="github"></a>
+        
+        
+        
+        
+        
+        
+        
+    
+</div>
+        </div>
+        <div class="right">
+            <div class="copyright">
+    <div class="info">
+        <span>&copy;</span>
+        <span>2015 ~ 2017</span>
+        <span>❤</span>
+        <span>Lian Yuchen(ShadowHappiness)</span>
+    </div>
+    <div class="theme">
+        <span>
+            动力来源于
+            <a href="http://hexo.io/" target="_blank">Hexo </a>
+        </span>
+        <span>
+            主题
+            <a href="https://github.com/ColMugX/hexo-theme-Nlvi"> Nlvi </a>
+        </span>
+    </div>
+    
+    <div class="visit_count">
+        <i class="iconfont icon-visit"></i>
+        <span id="busuanzi_value_site_uv"></span>
+        <i class="iconfont icon-people"></i>
+        <span id="busuanzi_value_site_pv"></span>
+    </div>
+    
+</div>
+        </div>
+    </div>
+</footer>
+    </div>
+    <script src="/script/nlvi.js"></script>
+
+    <script src="/lightbox/js/lightbox.min.js"></script>
+
+<script>
+$(document).ready(function(){
+    document.body.addEventListener('touchstart', function () {});
+    $('.progress').hide();
+    $('.body').show();
+    Nlvi.tagcloud();
+    Nlvi.back2top();
+    Nlvi.showComments();
+    Nlvi.showReward()
+
+    !CONFIG.animate && Nlvi.offAnimate();
+    CONFIG.lightbox && Nlvi.onPicBox();
+})
+</script>
+    </div>
+    <div class="backtop syuanpi dead" id="backtop">
+    <i class="iconfont icon-up"></i>
+</div>
+</body>
+</html>

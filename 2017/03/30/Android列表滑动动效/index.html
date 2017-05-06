@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <title> Android列表滑动动效 · Lian Yuchen </title>
+    <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+<link rel="stylesheet" href="/style/style.css">
+<script src="/script/jquery.min.js"></script>
+<script>
+    var CONFIG = {
+        title: "Lian Yuchen",
+        author: "Lian Yuchen(ShadowHappiness)",
+        lightbox: true,
+        animate: true
+    }
+</script>
+
+
+
+    <link rel="stylesheet" href="/lightbox/css/lightbox.min.css">
+
+
+
+
+    <link rel="stylesheet" href="/syuanpi/syuanpi.min.css">
+
+
+
+
+
+
+
+
+
+    <script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+</head>
+<body>
+    <div class="progress">
+    <div class="progress-inner"></div>
+</div>
+    <div class="body">
+    <div class="tagcloud" id="tagcloud">
+    <div class="tagcloud-inner">
+        <a href="/tags/Android/" style="font-size: 14px;">Android</a> <a href="/tags/Android-Studio/" style="font-size: 14px;">Android Studio</a> <a href="/tags/MVP/" style="font-size: 14px;">MVP</a> <a href="/tags/Mac/" style="font-size: 14px;">Mac</a> <a href="/tags/OkHttp/" style="font-size: 14px;">OkHttp</a> <a href="/tags/RecyclerView/" style="font-size: 14px;">RecyclerView</a> <a href="/tags/Retrofit/" style="font-size: 14px;">Retrofit</a> <a href="/tags/Sonar/" style="font-size: 14px;">Sonar</a> <a href="/tags/java/" style="font-size: 14px;">java</a> <a href="/tags/keystore/" style="font-size: 14px;">keystore</a> <a href="/tags/动画/" style="font-size: 14px;">动画</a> <a href="/tags/属性动画/" style="font-size: 14px;">属性动画</a> <a href="/tags/开发工具/" style="font-size: 14px;">开发工具</a> <a href="/tags/开发环境/" style="font-size: 14px;">开发环境</a> <a href="/tags/快捷键/" style="font-size: 14px;">快捷键</a> <a href="/tags/打包/" style="font-size: 14px;">打包</a> <a href="/tags/框架/" style="font-size: 14px;">框架</a> <a href="/tags/毕设/" style="font-size: 14px;">毕设</a> <a href="/tags/源码解析/" style="font-size: 14px;">源码解析</a> <a href="/tags/第三方分享/" style="font-size: 14px;">第三方分享</a> <a href="/tags/签名/" style="font-size: 14px;">签名</a> <a href="/tags/网络/" style="font-size: 14px;">网络</a>
+    </div>
+</div>
+    <header class="header" id="header">
+    <div class="title syuanpi tvIn">
+    <div class="table">
+        <div class="connect">
+            <div class="connect-inner">
+                <span><a href="/">Lian Yuchen</a></span>
+                
+                    <span id="subtitle">坚持当前所做的事！</span>
+                
+            </div>
+        </div>
+    </div>
+</div>
+    <nav class="main-nav syuanpi tvIn">
+<div class="table">
+
+    <ul class="menu">
+        
+        
+            <li class="menu-item">
+                <a href="/">
+                    <span>文章</span>
+                    
+                        <span class="menu-item-label">article</span>
+                    
+                </a>
+            </li>
+        
+        
+        
+            <li class="menu-item">
+                <a href="/archives">
+                    <span>归档</span>
+                    
+                        <span class="menu-item-label">archives</span>
+                    
+                </a>
+            </li>
+        
+        
+        
+            <li class="menu-item">
+                <a href="javascript:;" id="tags">
+                    <span>标签</span>
+                    
+                        <span class="menu-item-label">tags</span>
+                    
+                </a>
+            </li>
+        
+        
+        
+            <li class="menu-item">
+                <a href="/about">
+                    <span>关于</span>
+                    
+                        <span class="menu-item-label">about</span>
+                    
+                </a>
+            </li>
+        
+        
+    </ul>
+
+</div>
+</nav>
+<div class="mobile-nav"></div>
+</header>
+    <div class="container">
+        <main class="main" id="main">
+            
+    
+    <article class="post">
+        <header class="post-header">
+            <div class="post-time syuanpi riseIn-light back-1">
+                <span>2017年3月30日</span>
+            </div>
+            <h1 class="post-title syuanpi riseIn-light back-2">
+            
+                Android列表滑动动效
+            
+            </h1>
+            
+                
+                    <div class="post-tags syuanpi riseIn-light back-3">
+                    
+                        <a href="/tags/Android/">Android</a>
+                    
+                        <a href="/tags/动画/">动画</a>
+                    
+                        <a href="/tags/RecyclerView/">RecyclerView</a>
+                    
+                    </div>
+                
+            
+        </header>
+        <div class="post-content syuanpi riseIn-light back-3">
+            
+                <p>前言：公司的一个产品需求，需要将列表的最后可见的一项做透明度以及缩放处理，并且在滑动时，最后可见的一项可以淡入淡出的显示在列表中。效果如图~</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/1790711-5a12f08be64d42ad.gif?imageMogr2/auto-orient/strip" alt="1.gif"></p>
+<a id="more"></a>
+<p>实现：<br>调研：起初的设计方案是使用开源项目：RecyclerView Animators <a href="https://github.com/wasabeef/recyclerview-animators" target="_blank" rel="external">https://github.com/wasabeef/recyclerview-animators</a><br>但是过不了UI那关，于是便只能想办法实现滑动监听时，做一系列的效果了~</p>
+<p>设计分析：<br>已经确定了要实现RecyclerView滑动监听，必然就得了解RecyclerView滑动监听实现的方法：<br>1.onScrollStateChanged //滑动状态的改变<br>2.onScrolled //滑动时回调该方法<br>这里不需要第一个方法，因此我们就重写onScrolled方法：<br>1.找到列表中最后一项可见的view<br>2.根据可见部分占view总部分的占比,计算出透明度以及缩放比例。</p>
+<p>代码实现：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div></pre></td><td class="code"><pre><div class="line">private void calculateAlphaAndScale(RecyclerView recyclerView, LinearLayoutManager layoutManager) &#123;</div><div class="line">        //找出列表中可见的最后一项索引。</div><div class="line">        int firstItemPosition = layoutManager.findFirstVisibleItemPosition();</div><div class="line">        int lastItemPosition = layoutManager.findLastVisibleItemPosition();</div><div class="line">        //根据索引找到view</div><div class="line">        View lastView = layoutManager.getChildAt(lastItemPosition - firstItemPosition);</div><div class="line">        if (lastView != null) &#123;</div><div class="line">            //当找到最后一项的view时,根据可见部分占view总部分的占比,计算出透明度以及缩放比例。</div><div class="line">            int itemHeight = lastView.getHeight();</div><div class="line">            int visibleHeight = recyclerView.getHeight() - lastView.getTop();</div><div class="line">            if (visibleHeight &lt; 0) &#123;</div><div class="line">                return;</div><div class="line">            &#125;</div><div class="line">            float ratio = visibleHeight * 1.0f / itemHeight;</div><div class="line">            if (ratio &gt; 1.0) &#123;</div><div class="line">                return;</div><div class="line">            &#125;</div><div class="line">            lastView.setAlpha(ratio);</div><div class="line">            float scale = 0.8f;//默认最小的缩放比例</div><div class="line">            float scaleFactor = scale + (1 - scale) * ratio;</div><div class="line"></div><div class="line">            lastView.setScaleX(scaleFactor);</div><div class="line">            lastView.setScaleY(scaleFactor);</div><div class="line"></div><div class="line"></div><div class="line">        &#125;</div><div class="line">    &#125;</div></pre></td></tr></table></figure></p>
+<p>最重要的动画部分已经实现，但是还存在一些问题，实际项目中的还有tab切换，导致的列表刷新（由于时间紧迫，并没有采取ViewPager+Indicator的方式）时，已经做缩放和透明度的View没有还原。因此：<br>在每次做动效前，先遍历列表view，初始化一下状态。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line">@Override</div><div class="line">    public void onScrolled(RecyclerView recyclerView, int dx, int dy) &#123;</div><div class="line">        LinearLayoutManager layoutManager = (LinearLayoutManager) recyclerView.getLayoutManager();</div><div class="line">        int childCount = layoutManager.getChildCount();</div><div class="line">        //对每个item进行初始化</div><div class="line">        for (int i = 0; i &lt; childCount; i++) &#123;</div><div class="line"></div><div class="line">            layoutManager.getChildAt(i).setAlpha(1);</div><div class="line">            layoutManager.getChildAt(i).setScaleY(1);</div><div class="line">            layoutManager.getChildAt(i).setScaleX(1);</div><div class="line">        &#125;</div><div class="line">        calculateAlphaAndScale(recyclerView, layoutManager);</div><div class="line">    &#125;</div></pre></td></tr></table></figure></p>
+<p>这样，全部的动效就已经完毕了，跑在手机上的效果就如前面的gif图~</p>
+
+            
+        
+        </div>
+        
+            
+            
+    <hr class="copy-line">
+    <div class="post-copyright">
+        <div class="copy-author">
+            <span>作者 :</span>
+            <span>Lian Yuchen(ShadowHappiness)</span>
+        </div>
+        <div class="copy-url">
+            <span>地址 :</span>
+            <a href="http://lianyuchen.github.io/2017/03/30/Android列表滑动动效/">http://lianyuchen.github.io/2017/03/30/Android列表滑动动效/</a>
+        </div>
+        <div class="copy-origin">
+            <span>来源 :</span>
+            <a href="http://lianyuchen.github.io">http://lianyuchen.github.io</a>
+        </div>
+        <div class="copy-license">
+            
+            著作权归作者所有，转载请联系作者获得授权。
+        </div>
+    </div>
+
+        
+    </article>
+    
+        
+    <nav class="article-page">
+        
+        
+            <a href="/2016/11/28/Retrofit2-1源码解析/" id="art-right" class="art-left">
+                <span class="prev-title"> 
+                    <i class="iconfont icon-left"></i>Retrofit2.1源码解析
+                </span>
+            </a>
+        
+    </nav>
+
+        
+    
+
+
+        </main>
+        <footer class="footer syuanpi fadeIn" id="footer">
+    <hr>
+    <div class="footer-wrapper">
+        <div class="left">
+            <div class="contact-icon">
+    
+    
+    
+    
+    
+    
+    
+    
+        
+            <a href="https://github.com/lianyuchen" class="iconfont icon-github" title="github"></a>
+        
+        
+        
+        
+        
+        
+        
+    
+</div>
+        </div>
+        <div class="right">
+            <div class="copyright">
+    <div class="info">
+        <span>&copy;</span>
+        <span>2015 ~ 2017</span>
+        <span>❤</span>
+        <span>Lian Yuchen(ShadowHappiness)</span>
+    </div>
+    <div class="theme">
+        <span>
+            动力来源于
+            <a href="http://hexo.io/" target="_blank">Hexo </a>
+        </span>
+        <span>
+            主题
+            <a href="https://github.com/ColMugX/hexo-theme-Nlvi"> Nlvi </a>
+        </span>
+    </div>
+    
+    <div class="visit_count">
+        <i class="iconfont icon-visit"></i>
+        <span id="busuanzi_value_site_uv"></span>
+        <i class="iconfont icon-people"></i>
+        <span id="busuanzi_value_site_pv"></span>
+    </div>
+    
+</div>
+        </div>
+    </div>
+</footer>
+    </div>
+    <script src="/script/nlvi.js"></script>
+
+    <script src="/lightbox/js/lightbox.min.js"></script>
+
+<script>
+$(document).ready(function(){
+    document.body.addEventListener('touchstart', function () {});
+    $('.progress').hide();
+    $('.body').show();
+    Nlvi.tagcloud();
+    Nlvi.back2top();
+    Nlvi.showComments();
+    Nlvi.showReward()
+
+    !CONFIG.animate && Nlvi.offAnimate();
+    CONFIG.lightbox && Nlvi.onPicBox();
+})
+</script>
+    </div>
+    <div class="backtop syuanpi dead" id="backtop">
+    <i class="iconfont icon-up"></i>
+</div>
+</body>
+</html>

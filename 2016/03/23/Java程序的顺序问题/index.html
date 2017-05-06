@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <title> Java程序的顺序问题 · Lian Yuchen </title>
+    <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+<link rel="stylesheet" href="/style/style.css">
+<script src="/script/jquery.min.js"></script>
+<script>
+    var CONFIG = {
+        title: "Lian Yuchen",
+        author: "Lian Yuchen(ShadowHappiness)",
+        lightbox: true,
+        animate: true
+    }
+</script>
+
+
+
+    <link rel="stylesheet" href="/lightbox/css/lightbox.min.css">
+
+
+
+
+    <link rel="stylesheet" href="/syuanpi/syuanpi.min.css">
+
+
+
+
+
+
+
+
+
+    <script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+</head>
+<body>
+    <div class="progress">
+    <div class="progress-inner"></div>
+</div>
+    <div class="body">
+    <div class="tagcloud" id="tagcloud">
+    <div class="tagcloud-inner">
+        <a href="/tags/Android/" style="font-size: 14px;">Android</a> <a href="/tags/Android-Studio/" style="font-size: 14px;">Android Studio</a> <a href="/tags/MVP/" style="font-size: 14px;">MVP</a> <a href="/tags/Mac/" style="font-size: 14px;">Mac</a> <a href="/tags/OkHttp/" style="font-size: 14px;">OkHttp</a> <a href="/tags/RecyclerView/" style="font-size: 14px;">RecyclerView</a> <a href="/tags/Retrofit/" style="font-size: 14px;">Retrofit</a> <a href="/tags/Sonar/" style="font-size: 14px;">Sonar</a> <a href="/tags/java/" style="font-size: 14px;">java</a> <a href="/tags/keystore/" style="font-size: 14px;">keystore</a> <a href="/tags/动画/" style="font-size: 14px;">动画</a> <a href="/tags/属性动画/" style="font-size: 14px;">属性动画</a> <a href="/tags/开发工具/" style="font-size: 14px;">开发工具</a> <a href="/tags/开发环境/" style="font-size: 14px;">开发环境</a> <a href="/tags/快捷键/" style="font-size: 14px;">快捷键</a> <a href="/tags/打包/" style="font-size: 14px;">打包</a> <a href="/tags/框架/" style="font-size: 14px;">框架</a> <a href="/tags/毕设/" style="font-size: 14px;">毕设</a> <a href="/tags/源码解析/" style="font-size: 14px;">源码解析</a> <a href="/tags/第三方分享/" style="font-size: 14px;">第三方分享</a> <a href="/tags/签名/" style="font-size: 14px;">签名</a> <a href="/tags/网络/" style="font-size: 14px;">网络</a>
+    </div>
+</div>
+    <header class="header" id="header">
+    <div class="title syuanpi tvIn">
+    <div class="table">
+        <div class="connect">
+            <div class="connect-inner">
+                <span><a href="/">Lian Yuchen</a></span>
+                
+                    <span id="subtitle">坚持当前所做的事！</span>
+                
+            </div>
+        </div>
+    </div>
+</div>
+    <nav class="main-nav syuanpi tvIn">
+<div class="table">
+
+    <ul class="menu">
+        
+        
+            <li class="menu-item">
+                <a href="/">
+                    <span>文章</span>
+                    
+                        <span class="menu-item-label">article</span>
+                    
+                </a>
+            </li>
+        
+        
+        
+            <li class="menu-item">
+                <a href="/archives">
+                    <span>归档</span>
+                    
+                        <span class="menu-item-label">archives</span>
+                    
+                </a>
+            </li>
+        
+        
+        
+            <li class="menu-item">
+                <a href="javascript:;" id="tags">
+                    <span>标签</span>
+                    
+                        <span class="menu-item-label">tags</span>
+                    
+                </a>
+            </li>
+        
+        
+        
+            <li class="menu-item">
+                <a href="/about">
+                    <span>关于</span>
+                    
+                        <span class="menu-item-label">about</span>
+                    
+                </a>
+            </li>
+        
+        
+    </ul>
+
+</div>
+</nav>
+<div class="mobile-nav"></div>
+</header>
+    <div class="container">
+        <main class="main" id="main">
+            
+    
+    <article class="post">
+        <header class="post-header">
+            <div class="post-time syuanpi riseIn-light back-1">
+                <span>2016年3月23日</span>
+            </div>
+            <h1 class="post-title syuanpi riseIn-light back-2">
+            
+                Java程序的顺序问题
+            
+            </h1>
+            
+                
+                    <div class="post-tags syuanpi riseIn-light back-3">
+                    
+                        <a href="/tags/java/">java</a>
+                    
+                    </div>
+                
+            
+        </header>
+        <div class="post-content syuanpi riseIn-light back-3">
+            
+                <blockquote>
+<p>一、Java中的执行顺序</p>
+<p>二、Java中的赋值顺序</p>
+</blockquote>
+<h3 id="一、Java中的执行顺序"><a href="#一、Java中的执行顺序" class="headerlink" title="一、Java中的执行顺序"></a>一、Java中的执行顺序</h3><p>1.静态块<br>2.块<br>3.构造器<br>4.父类构造器</p>
+<p>这部分很好实现，只需要写一个子类，其中有自身构造方法，普通代码块，以及静态代码块，写一个父类，之中有构造方法，都打印输出一行文本，即可明白其中的执行顺序。<br><a id="more"></a></p>
+<h6 id="Children-java"><a href="#Children-java" class="headerlink" title="Children.java"></a>Children.java</h6><figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line">public class Children extends Parent &#123;    </div><div class="line">    public Children() &#123;</div><div class="line">        System.out.println("Children()");</div><div class="line">    &#125;</div><div class="line">    &#123;</div><div class="line">        System.out.println("Children() block");</div><div class="line">    &#125;</div><div class="line">    static &#123;</div><div class="line">        System.out.println("Children() static block");</div><div class="line">    &#125;</div><div class="line">    public static void main(String[] args) &#123;</div><div class="line">        Children children = new Children();</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h6 id="Parent-java"><a href="#Parent-java" class="headerlink" title="Parent.java"></a>Parent.java</h6><figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">public class Parent &#123;</div><div class="line">    public Parent() &#123;</div><div class="line">        System.out.println("Parent()");</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h6 id="运行结果为："><a href="#运行结果为：" class="headerlink" title="运行结果为："></a>运行结果为：</h6><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">Children() static block</div><div class="line">Parent()</div><div class="line">Children() block</div><div class="line">Children()</div></pre></td></tr></table></figure>
+<p>也就是说，在我们的程序中，实例化一个类对象的时候，运行顺序为：</p>
+<blockquote>
+<p>自身静态块<br>父类构造器<br>自身块<br>自身构造器 </p>
+</blockquote>
+<p>假设父类中也有静态代码快和普通代码块呢？一起来看一下</p>
+<h6 id="修改后的Parent-java"><a href="#修改后的Parent-java" class="headerlink" title="修改后的Parent.java"></a>修改后的Parent.java</h6><figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">public class Parent &#123;</div><div class="line">    public Parent() &#123;</div><div class="line">        System.out.println("Parent()");</div><div class="line">    &#125;</div><div class="line">    &#123;</div><div class="line">        System.out.println("Parent() block");</div><div class="line">    &#125;</div><div class="line">    static &#123;</div><div class="line">        System.out.println("Parent() static block");</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h6 id="运行结果为：-1"><a href="#运行结果为：-1" class="headerlink" title="运行结果为："></a>运行结果为：</h6><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">Parent() static block</div><div class="line">Children() static block</div><div class="line">Parent() block</div><div class="line">Parent()</div><div class="line">Children() block</div><div class="line">Children()</div></pre></td></tr></table></figure>
+<p> 也就是说此时的运行顺序为：</p>
+<blockquote>
+<p>父类静态块<br>自身静态块<br>父类块<br>父类构造器<br>自身块<br>自身构造器 </p>
+</blockquote>
+<p> 好了，知道了运行的顺序，那么这是为什么呢？</p>
+<p>这就要从JVM中类的装载机制和实例化机制开始说起，这里因为主题原因，先不讨论，有兴趣的同学可以自己查资料，下面来看看第二个问题。</p>
+<h3 id="二、Java中的赋值顺序"><a href="#二、Java中的赋值顺序" class="headerlink" title="二、Java中的赋值顺序"></a>二、Java中的赋值顺序</h3><p>1.从父类继承该值<br>（包括：1.作为父类的成员变量已经赋值  2.在父类的块中赋值  3.在父类的构造器中赋值）<br>2.在构造器中对其进行赋值<br>3.在块中进行赋值<br>4.在方法调用中进行赋值</p>
+<h6 id="Parent-java-1"><a href="#Parent-java-1" class="headerlink" title="Parent.java"></a>Parent.java</h6><figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line">public class Parent &#123;</div><div class="line">    public String flag = "父类成员变量赋值";</div><div class="line">    public Parent() &#123;</div><div class="line">        System.out.println("父类构造器---&gt;" + flag);</div><div class="line">        flag = "父类构造器赋值";</div><div class="line">        System.out.println("父类构造器---&gt;" + flag);</div><div class="line">    &#125;</div><div class="line">    &#123;</div><div class="line">        System.out.println("父类代码块---&gt;" + flag);</div><div class="line">        flag = "父类代码块赋值";</div><div class="line">        System.out.println("父类代码块---&gt;" + flag);</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h6 id="Children-java-1"><a href="#Children-java-1" class="headerlink" title="Children.java"></a>Children.java</h6><figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div></pre></td><td class="code"><pre><div class="line">public class Children extends Parent &#123;</div><div class="line">    public String flag = "成员变量赋值";</div><div class="line">    public Children() &#123;</div><div class="line">        System.out.println("子类构造器---&gt;" + flag);</div><div class="line">        flag = "子类构造器赋值";</div><div class="line">    &#125;</div><div class="line">    &#123;</div><div class="line">        System.out.println("子类代码快---&gt;" + flag);</div><div class="line">        flag = "子类代码块赋值";</div><div class="line">    &#125;</div><div class="line">    public void setFlag()&#123;</div><div class="line">        System.out.println("子类方法---&gt;" + flag);</div><div class="line">    &#125;</div><div class="line">    public static void main(String[] args) &#123;</div><div class="line">        Children children = new Children();</div><div class="line">        children.setFlag();</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h6 id="运行结果为：-2"><a href="#运行结果为：-2" class="headerlink" title="运行结果为："></a>运行结果为：</h6><figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">父类代码快---&gt;父类成员变量赋值</div><div class="line">父类代码快---&gt;父类代码块赋值</div><div class="line">父类构造器---&gt;父类代码块赋值</div><div class="line">父类构造器---&gt;父类构造器赋值</div><div class="line">子类代码快---&gt;成员变量赋值</div><div class="line">子类构造器---&gt;子类代码块赋值</div><div class="line">子类方法---&gt;子类构造器赋值</div></pre></td></tr></table></figure>
+<p>答案很明显，赋值顺序为：</p>
+<blockquote>
+<p>父类成员变量赋值<br>父类块赋值<br>父类构造器赋值<br>自身成员变量赋值<br>自身块赋值<br>自身构造器赋值</p>
+</blockquote>
+<p>结合我们前面说的程序中的执行顺序，这个显然是很好理解的：</p>
+<blockquote>
+<p>成员变量赋值–&gt;块赋值–&gt;构造器赋值<br>父类的块–&gt;父类构造器–&gt;自身块–&gt;自身构造器</p>
+</blockquote>
+<p>因为一个成员变量是不可能在静态变量中赋值的，而且又前面程序执行顺序可知</p>
+<blockquote>
+<p>静态块–&gt;块</p>
+</blockquote>
+<p>所以，程序的赋值步骤为</p>
+<blockquote>
+<p>父类的静态变量赋值<br>自身的静态变量赋值<br>父类成员变量赋值<br>父类块赋值<br>父类构造器赋值<br>自身成员变量赋值<br>自身块赋值<br>自身构造器赋值</p>
+</blockquote>
+
+            
+        
+        </div>
+        
+            
+            
+    <hr class="copy-line">
+    <div class="post-copyright">
+        <div class="copy-author">
+            <span>作者 :</span>
+            <span>Lian Yuchen(ShadowHappiness)</span>
+        </div>
+        <div class="copy-url">
+            <span>地址 :</span>
+            <a href="http://lianyuchen.github.io/2016/03/23/Java程序的顺序问题/">http://lianyuchen.github.io/2016/03/23/Java程序的顺序问题/</a>
+        </div>
+        <div class="copy-origin">
+            <span>来源 :</span>
+            <a href="http://lianyuchen.github.io">http://lianyuchen.github.io</a>
+        </div>
+        <div class="copy-license">
+            
+            著作权归作者所有，转载请联系作者获得授权。
+        </div>
+    </div>
+
+        
+    </article>
+    
+        
+    <nav class="article-page">
+        
+            <a href="/2016/03/25/keystore的作用以及如何生成/" id="art-left" class="art-right">
+                <span class="next-title">
+                    Android keystore的作用以及如何生成<i class="iconfont icon-right"></i> 
+                </span>
+            </a>
+        
+        
+            <a href="/2016/03/23/Studio常用快捷键/" id="art-right" class="art-left">
+                <span class="prev-title"> 
+                    <i class="iconfont icon-left"></i>Android Studio常用快捷键
+                </span>
+            </a>
+        
+    </nav>
+
+        
+    
+
+
+        </main>
+        <footer class="footer syuanpi fadeIn" id="footer">
+    <hr>
+    <div class="footer-wrapper">
+        <div class="left">
+            <div class="contact-icon">
+    
+    
+    
+    
+    
+    
+    
+    
+        
+            <a href="https://github.com/lianyuchen" class="iconfont icon-github" title="github"></a>
+        
+        
+        
+        
+        
+        
+        
+    
+</div>
+        </div>
+        <div class="right">
+            <div class="copyright">
+    <div class="info">
+        <span>&copy;</span>
+        <span>2015 ~ 2017</span>
+        <span>❤</span>
+        <span>Lian Yuchen(ShadowHappiness)</span>
+    </div>
+    <div class="theme">
+        <span>
+            动力来源于
+            <a href="http://hexo.io/" target="_blank">Hexo </a>
+        </span>
+        <span>
+            主题
+            <a href="https://github.com/ColMugX/hexo-theme-Nlvi"> Nlvi </a>
+        </span>
+    </div>
+    
+    <div class="visit_count">
+        <i class="iconfont icon-visit"></i>
+        <span id="busuanzi_value_site_uv"></span>
+        <i class="iconfont icon-people"></i>
+        <span id="busuanzi_value_site_pv"></span>
+    </div>
+    
+</div>
+        </div>
+    </div>
+</footer>
+    </div>
+    <script src="/script/nlvi.js"></script>
+
+    <script src="/lightbox/js/lightbox.min.js"></script>
+
+<script>
+$(document).ready(function(){
+    document.body.addEventListener('touchstart', function () {});
+    $('.progress').hide();
+    $('.body').show();
+    Nlvi.tagcloud();
+    Nlvi.back2top();
+    Nlvi.showComments();
+    Nlvi.showReward()
+
+    !CONFIG.animate && Nlvi.offAnimate();
+    CONFIG.lightbox && Nlvi.onPicBox();
+})
+</script>
+    </div>
+    <div class="backtop syuanpi dead" id="backtop">
+    <i class="iconfont icon-up"></i>
+</div>
+</body>
+</html>
