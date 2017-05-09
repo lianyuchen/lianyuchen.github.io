@@ -1,11 +1,7 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
-    <title>
-  
-    归档 · Lian Yuchen
-  
-</title>
+    <title> Android关于shape画虚线 · Lian Yuchen </title>
     <meta charset="UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=edge" />
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
@@ -125,207 +121,100 @@
         <main class="main" id="main">
             
     
-    <div class="archive syuanpi riseIn-light" id="archive">
-        
-            <h1 class="archive-title">Total</h1>
-            <span class="archive-num">一共有 13 篇文章</span>
-        
-        <div class="archive-list">
-            <ul>
-        
+    <article class="post">
+        <header class="post-header">
+            <div class="post-time syuanpi riseIn-light back-1">
+                <span>2017年5月9日</span>
+            </div>
+            <h1 class="post-title syuanpi riseIn-light back-2">
+            
+                Android关于shape画虚线
+            
+            </h1>
             
                 
-                
-                
+                    <div class="post-tags syuanpi riseIn-light back-3">
                     
-                     
-                        <h2 class="archive-year"> 2016 </h2>
+                        <a href="/tags/Android/">Android</a>
                     
+                        <a href="/tags/shape/">shape</a>
+                    
+                    </div>
                 
             
+        </header>
+        <div class="post-content syuanpi riseIn-light back-3">
             
-            <li class="archive-post">
-                <span class="archive-post-time">
-                
-                    11-28
-                
-                </span>
-                <span class="archive-post-link">
-                    <a href="/2016/11/28/Retrofit2-1源码解析/">Retrofit2.1源码解析</a>
-                </span>
-            </li>
+                <h4 id="前言：平时我们经常使用shape用来绘制背景图，通常的用法确实没有什么问题，但是你遇到过画虚线嘛"><a href="#前言：平时我们经常使用shape用来绘制背景图，通常的用法确实没有什么问题，但是你遇到过画虚线嘛" class="headerlink" title="前言：平时我们经常使用shape用来绘制背景图，通常的用法确实没有什么问题，但是你遇到过画虚线嘛?"></a>前言：平时我们经常使用shape用来绘制背景图，通常的用法确实没有什么问题，但是你遇到过画虚线嘛?</h4><a id="more"></a>
+<p>实现虚线的shape画法：</p>
+<p>shape_dash_line.xml</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">&lt;?xml version="1.0" encoding="utf-8"?&gt;</div><div class="line">&lt;shape xmlns:android="http://schemas.android.com/apk/res/android"</div><div class="line">    android:shape="line"&gt;</div><div class="line">    &lt;size android:height="1dp" /&gt;</div><div class="line">    &lt;stroke</div><div class="line">        android:dashGap="3dp"</div><div class="line">        android:dashWidth="8dp"</div><div class="line">        android:width="1dp"</div><div class="line">        android:color="#848C99" /&gt;</div><div class="line">&lt;/shape&gt;</div></pre></td></tr></table></figure>
+<p>这是很普遍的写法，相信大家都会写。</p>
+<p>然后写个 view ，设置它的 background 为 @draw/shape_dash_line ，然而却发现在 Android Studio 预览面板上并没有显示这条虚线。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">&lt;View</div><div class="line">    android:id=<span class="string">"@+id/line"</span></div><div class="line">    android:layout_width=<span class="string">"match_parent"</span></div><div class="line">    android:layout_height=<span class="string">"1dp"</span></div><div class="line">    android:layout_marginLeft=<span class="string">"10dp"</span></div><div class="line">    android:layout_marginRight=<span class="string">"10dp"</span></div><div class="line">    android:background=<span class="string">"@drawable/shape_dash_line"</span>/&gt;</div></pre></td></tr></table></figure>
+<p><img src="http://upload-images.jianshu.io/upload_images/1790711-4a99d4551776f530.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="image.png"></p>
+<p>问题1：画的虚线为什么没有显示出来？</p>
+<p>解答：原因在于设置的 view 的高度与 shape 虚线的高度相同。因此不会显示，只需要将 view 中的 layout_height 设置的比 shape 虚线的高度大就可以。例如：将 layout_height=“1dp” 改为 layout_height=“1.5dp” 。</p>
+<p>这时，Android Studio 的预览面板就出现了这条虚线。</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/1790711-5108f4d3e3a27e3f.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="image.png"></p>
+<p>好，此时运行到真机当中，却发现在真机上显示的却是一条实线。</p>
+<p>问题2：本该显示的虚线，为什么显示为实线？</p>
+<p>解答：原因在于 Android 3.0 之后，系统默认关闭了硬件加速功能。所以你可以使用以下方法。</p>
+<blockquote>
+<ol>
+<li><p>view.setLayerType(View.LAYER_TYPE_SOFTWARE, null);</p>
+</li>
+<li><p>在AndroidManifest文件中，在需要用到虚线的activity的添加属性</p>
+<activity android:hardwareaccelerated="false">
 
+</activity></li>
+</ol>
+</blockquote>
+<p>更多方式请查看官网：<a href="https://developer.android.com/guide/topics/graphics/hardware-accel.html" target="_blank" rel="external">https://developer.android.com/guide/topics/graphics/hardware-accel.html</a></p>
+
+            
+        
+        </div>
         
             
-                
-                
-                
             
+    <hr class="copy-line">
+    <div class="post-copyright">
+        <div class="copy-author">
+            <span>作者 :</span>
+            <span>Lian Yuchen(ShadowHappiness)</span>
+        </div>
+        <div class="copy-url">
+            <span>地址 :</span>
+            <a href="http://lianyuchen.github.io/2017/05/09/关于shape画虚线/">http://lianyuchen.github.io/2017/05/09/关于shape画虚线/</a>
+        </div>
+        <div class="copy-origin">
+            <span>来源 :</span>
+            <a href="http://lianyuchen.github.io">http://lianyuchen.github.io</a>
+        </div>
+        <div class="copy-license">
             
-            <li class="archive-post">
-                <span class="archive-post-time">
-                
-                    11-22
-                
-                </span>
-                <span class="archive-post-link">
-                    <a href="/2016/11/22/2016-11-22随笔-Android翻转动画/">2016.11.22随笔-Android翻转动画</a>
-                </span>
-            </li>
-
-        
-            
-                
-                
-                
-            
-            
-            <li class="archive-post">
-                <span class="archive-post-time">
-                
-                    08-31
-                
-                </span>
-                <span class="archive-post-link">
-                    <a href="/2016/08/31/Android开发中一些好用的小工具/">Android开发中一些好用的小工具</a>
-                </span>
-            </li>
-
-        
-            
-                
-                
-                
-            
-            
-            <li class="archive-post">
-                <span class="archive-post-time">
-                
-                    08-12
-                
-                </span>
-                <span class="archive-post-link">
-                    <a href="/2016/08/12/从头搭建环境变量/">从头搭建环境变量</a>
-                </span>
-            </li>
-
-        
-            
-                
-                
-                
-            
-            
-            <li class="archive-post">
-                <span class="archive-post-time">
-                
-                    07-13
-                
-                </span>
-                <span class="archive-post-link">
-                    <a href="/2016/07/13/初识Sonar/">初识Sonar</a>
-                </span>
-            </li>
-
-        
-            
-                
-                
-                
-            
-            
-            <li class="archive-post">
-                <span class="archive-post-time">
-                
-                    04-07
-                
-                </span>
-                <span class="archive-post-link">
-                    <a href="/2016/04/07/Android接入微信分享过程的喜和泪/">Android接入微信分享过程的喜和泪</a>
-                </span>
-            </li>
-
-        
-            
-                
-                
-                
-            
-            
-            <li class="archive-post">
-                <span class="archive-post-time">
-                
-                    03-29
-                
-                </span>
-                <span class="archive-post-link">
-                    <a href="/2016/03/29/毕业设计-“日程盒子”/">毕业设计--“日程盒子”</a>
-                </span>
-            </li>
-
-        
-            
-                
-                
-                
-            
-            
-            <li class="archive-post">
-                <span class="archive-post-time">
-                
-                    03-25
-                
-                </span>
-                <span class="archive-post-link">
-                    <a href="/2016/03/25/Studio中自动签名并打包/">Android Studio中自动签名并打包</a>
-                </span>
-            </li>
-
-        
-            
-                
-                
-                
-            
-            
-            <li class="archive-post">
-                <span class="archive-post-time">
-                
-                    03-25
-                
-                </span>
-                <span class="archive-post-link">
-                    <a href="/2016/03/25/keystore的作用以及如何生成/">Android keystore的作用以及如何生成</a>
-                </span>
-            </li>
-
-        
-            
-                
-                
-                
-            
-            
-            <li class="archive-post">
-                <span class="archive-post-time">
-                
-                    03-23
-                
-                </span>
-                <span class="archive-post-link">
-                    <a href="/2016/03/23/Java程序的顺序问题/">Java程序的顺序问题</a>
-                </span>
-            </li>
-
-        
-            </ul>
+            著作权归作者所有，转载请联系作者获得授权。
         </div>
     </div>
+
+        
+    </article>
     
-    <nav class="pagination">
-        <span class="page-number current">1</span><a class="page-number" href="/archives/2016/page/2/">2</a><a class="extend next" rel="next" href="/archives/2016/page/2/">下一页 ></a>
+        
+    <nav class="article-page">
+        
+        
+            <a href="/2017/03/30/Android列表滑动动效/" id="art-right" class="art-left">
+                <span class="prev-title"> 
+                    <i class="iconfont icon-left"></i>Android列表滑动动效
+                </span>
+            </a>
+        
     </nav>
 
+        
+    
 
 
         </main>
