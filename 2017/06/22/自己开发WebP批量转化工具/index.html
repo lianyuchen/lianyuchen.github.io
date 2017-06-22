@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <title> 自己开发WebP批量转化工具 · Lian Yuchen </title>
+    <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+<link rel="stylesheet" href="/style/style.css">
+<script src="/script/jquery.min.js"></script>
+<script>
+    var CONFIG = {
+        title: "Lian Yuchen",
+        author: "Lian Yuchen(ShadowHappiness)",
+        lightbox: true,
+        animate: true
+    }
+</script>
+
+
+
+    <link rel="stylesheet" href="/lightbox/css/lightbox.min.css">
+
+
+
+
+    <link rel="stylesheet" href="/syuanpi/syuanpi.min.css">
+
+
+
+
+
+
+
+
+
+    <script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+</head>
+<body>
+    <div class="progress">
+    <div class="progress-inner"></div>
+</div>
+    <div class="body">
+    <div class="tagcloud" id="tagcloud">
+    <div class="tagcloud-inner">
+        <a href="/tags/Android/" style="font-size: 14px;">Android</a> <a href="/tags/Android-Studio/" style="font-size: 14px;">Android Studio</a> <a href="/tags/Java/" style="font-size: 14px;">Java</a> <a href="/tags/Linux/" style="font-size: 14px;">Linux</a> <a href="/tags/MVP/" style="font-size: 14px;">MVP</a> <a href="/tags/Mac/" style="font-size: 14px;">Mac</a> <a href="/tags/OkHttp/" style="font-size: 14px;">OkHttp</a> <a href="/tags/RecyclerView/" style="font-size: 14px;">RecyclerView</a> <a href="/tags/Retrofit/" style="font-size: 14px;">Retrofit</a> <a href="/tags/Sonar/" style="font-size: 14px;">Sonar</a> <a href="/tags/java/" style="font-size: 14px;">java</a> <a href="/tags/keystore/" style="font-size: 14px;">keystore</a> <a href="/tags/shape/" style="font-size: 14px;">shape</a> <a href="/tags/内存泄露/" style="font-size: 14px;">内存泄露</a> <a href="/tags/动画/" style="font-size: 14px;">动画</a> <a href="/tags/属性动画/" style="font-size: 14px;">属性动画</a> <a href="/tags/开发工具/" style="font-size: 14px;">开发工具</a> <a href="/tags/开发环境/" style="font-size: 14px;">开发环境</a> <a href="/tags/快捷键/" style="font-size: 14px;">快捷键</a> <a href="/tags/打包/" style="font-size: 14px;">打包</a> <a href="/tags/框架/" style="font-size: 14px;">框架</a> <a href="/tags/毕设/" style="font-size: 14px;">毕设</a> <a href="/tags/源码解析/" style="font-size: 14px;">源码解析</a> <a href="/tags/第三方分享/" style="font-size: 14px;">第三方分享</a> <a href="/tags/签名/" style="font-size: 14px;">签名</a> <a href="/tags/网络/" style="font-size: 14px;">网络</a>
+    </div>
+</div>
+    <header class="header" id="header">
+    <div class="title syuanpi tvIn">
+    <div class="table">
+        <div class="connect">
+            <div class="connect-inner">
+                <span><a href="/">Lian Yuchen</a></span>
+                
+                    <span id="subtitle">坚持当前所做的事！</span>
+                
+            </div>
+        </div>
+    </div>
+</div>
+    <nav class="main-nav syuanpi tvIn">
+<div class="table">
+
+    <ul class="menu">
+        
+        
+            <li class="menu-item">
+                <a href="/">
+                    <span>文章</span>
+                    
+                        <span class="menu-item-label">article</span>
+                    
+                </a>
+            </li>
+        
+        
+        
+            <li class="menu-item">
+                <a href="/archives">
+                    <span>归档</span>
+                    
+                        <span class="menu-item-label">archives</span>
+                    
+                </a>
+            </li>
+        
+        
+        
+            <li class="menu-item">
+                <a href="javascript:;" id="tags">
+                    <span>标签</span>
+                    
+                        <span class="menu-item-label">tags</span>
+                    
+                </a>
+            </li>
+        
+        
+        
+            <li class="menu-item">
+                <a href="/about">
+                    <span>关于</span>
+                    
+                        <span class="menu-item-label">about</span>
+                    
+                </a>
+            </li>
+        
+        
+    </ul>
+
+</div>
+</nav>
+<div class="mobile-nav"></div>
+</header>
+    <div class="container">
+        <main class="main" id="main">
+            
+    
+    <article class="post">
+        <header class="post-header">
+            <div class="post-time syuanpi riseIn-light back-1">
+                <span>2017年6月22日</span>
+            </div>
+            <h1 class="post-title syuanpi riseIn-light back-2">
+            
+                自己开发WebP批量转化工具
+            
+            </h1>
+            
+                
+                    <div class="post-tags syuanpi riseIn-light back-3">
+                    
+                        <a href="/tags/开发工具/">开发工具</a>
+                    
+                        <a href="/tags/Linux/">Linux</a>
+                    
+                    </div>
+                
+            
+        </header>
+        <div class="post-content syuanpi riseIn-light back-3">
+            
+                <h3 id="由于WebP项目的启动，于是需要了解如何将png或jpg格式的图片转化为WebP格式。但是网上的第三方工具并不能满足我们（无损压缩）的需求，因此，便自己开始学习起linux命令，来执行转换。"><a href="#由于WebP项目的启动，于是需要了解如何将png或jpg格式的图片转化为WebP格式。但是网上的第三方工具并不能满足我们（无损压缩）的需求，因此，便自己开始学习起linux命令，来执行转换。" class="headerlink" title="由于WebP项目的启动，于是需要了解如何将png或jpg格式的图片转化为WebP格式。但是网上的第三方工具并不能满足我们（无损压缩）的需求，因此，便自己开始学习起linux命令，来执行转换。"></a>由于WebP项目的启动，于是需要了解如何将png或jpg格式的图片转化为WebP格式。但是网上的第三方工具并不能满足我们（无损压缩）的需求，因此，便自己开始学习起linux命令，来执行转换。</h3><a id="more"></a>
+<p>Google 给我们提供了转化为 WebP 的命令 lib。但是每次我们想要转化图片的时候，都需要用 cwebp 命令来对一张一张的图片进行转化，效率太低了。有没有什么办法可以一次性批量转化呢？</p>
+<p>首先，我们来了解一下 Google 提供了什么命令来转化 webp 。</p>
+<p><a href="https://storage.googleapis.com/downloads.webmproject.org/releases/webp/libwebp-0.4.1-mac-10.8.tar.gz" target="_blank" rel="external">libwebp-0.4.1-mac-10.8.tar.gz</a></p>
+<p><img src="https://ws4.sinaimg.cn/large/006tNc79ly1fgtt8hfgb2j30mm0ghgnh.jpg" alt=""></p>
+<p>在 bin 目录下，我们要使用到得就是 cwebp 命令。</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">./cwebp -lossless a.png -o b.webp </div><div class="line"><span class="meta">#</span>使用cwebp命令 将 a.png 转化为 b.webp, -lossless 是无损压缩选项</div></pre></td></tr></table></figure>
+<ul>
+<li>注意：要想执行 cwebp 命令，必须先进入到 bin 目录！！！！除非你把这个命令配置到环境变量中。。。至于怎么配，我的另外<a href="https://lianyuchen.github.io/2016/08/12/%E4%BB%8E%E5%A4%B4%E6%90%AD%E5%BB%BA%E7%8E%AF%E5%A2%83%E5%8F%98%E9%87%8F/">一篇博客</a>讲到了。</li>
+</ul>
+<p>ok，知道怎么使用这个 cwebp 了，我们来想想怎么批量转化。</p>
+<p>思路：我们希望“扔”进来一个图片文件夹，然后遍历该文件夹中所有的图片文件，并且执行转化。（ok，思路就是这么简单。）</p>
+<p>既然我们想要遍历文件夹，那我们得知道类似 for 循环的语句在 shell 中如何书写。</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">for var in file/dir</div><div class="line">do</div><div class="line">...</div><div class="line">done</div><div class="line"><span class="meta">#</span>var 表示遍历文件夹中的单个文件</div><div class="line"><span class="meta">#</span>do 表示你要做的操作</div><div class="line"><span class="meta">#</span>done 表示循环结束</div></pre></td></tr></table></figure>
+<p>ok，到这里，我们的思路以及语法都大致了解了，下面贴上第一版的 shell 脚本。</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div></pre></td><td class="code"><pre><div class="line">for a in /路径/*.png</div><div class="line">do</div><div class="line"><span class="meta">#</span>打印变量 a 的值，比如：/User/picture/photo.png</div><div class="line">echo $a</div><div class="line"><span class="meta">#</span>删除变量 a 左侧最后一个出现/的所有字符，并赋值给 b</div><div class="line">b=$&#123;a##*/&#125;</div><div class="line"><span class="meta">#</span>删除变量 b 右侧第一个出现.的所有字符，并复制给 c</div><div class="line">c=$&#123;b%.*&#125;</div><div class="line"><span class="meta">#</span>打印变量 b 的值，如：photo.png</div><div class="line">echo $b</div><div class="line"><span class="meta">#</span>打印变量 c 的值，如：photo</div><div class="line">echo $c</div><div class="line">echo "----------------"</div><div class="line"><span class="meta">#</span>判断语句，如果是 c 的值是".9"结尾的话，将 .9图复制到指定的输出目录下。</div><div class="line">if [[ $c == *\.9 ]];</div><div class="line">then cp $a /输出的路径/$b</div><div class="line">else</div><div class="line"><span class="meta">#</span>若不是.9的图片，则执行无损转化。</div><div class="line">./cwebp -lossless $a -o /输出的路径/$c.webp </div><div class="line">fi</div><div class="line">done</div></pre></td></tr></table></figure>
+<p>到这里，以为大功告成了嘛？No，难道我们每次打开Terminal，然后一行一行的敲这个脚本么？我们得想个办法，写成个可执行文件，这样就方便多了嘛。另外，每次我们的输入的图片路径或者文件夹路径，灵活度不高，要是能从终端输入的该多好？</p>
+<p>ok，说干就干，于是我们创建了一个文本，取名就叫 shell 好了。</p>
+<p>我们想让它可执行，于是用到：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">chmod 777 shell</div></pre></td></tr></table></figure>
+<p>将 “shell” 赋予了可执行权限。</p>
+<p>然后，我们想让用户自己输入图片的路径和转化后输出的路径，怎么做呢？</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#</span>使用 read 语法，-p 选项表示用来提示的文字 input是个变量，表示输入的参数</div><div class="line"><span class="meta">#</span>读取用户输入的输入路径（要转换的图片文件夹或图片文件）</div><div class="line">read -p "Please input include '.png' file or directory :" input</div><div class="line"><span class="meta"></span></div><div class="line">#读取用户输入的输出路径（转换成功后的图片文件夹或图片文件）</div><div class="line">read -p "Please input include '.webp' file or directory :" output</div></pre></td></tr></table></figure>
+<p>如上，这时我们的转化工具的易用性也提高了不少。</p>
+<p>但是，第一版的 shell 脚本还存在了许多问题，例如：传进来的如果不是文件夹，而是图片呢？如果文件夹下的图片格式不只是png，还有jpg，或者别的格式呢？</p>
+<p>另外，作为程序员，我们希望 coding 出来的代码符合“单一职责”原则。是否可以将转化的过程封装为一个函数或者方法呢？</p>
+<p>于是，有了下面的这个“类终极版”：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#</span>读取用户输入的输入路径（要转换的图片文件夹或图片文件）</div><div class="line">read -p "Please input include '.png' file or directory :" input</div><div class="line"><span class="meta"></span></div><div class="line">#读取用户输入的输出路径（转换成功后的图片文件夹或图片文件）</div><div class="line">read -p "Please input include '.webp' file or directory :" output</div><div class="line"><span class="meta"></span></div><div class="line">#mPath=$input  调试用</div><div class="line"><span class="meta"></span></div><div class="line">#打印路径</div><div class="line">echo $input</div><div class="line">echo $output</div><div class="line"><span class="meta"></span></div><div class="line">#test ! -f $mPath &amp;&amp; echo "This is not file"	调试用</div><div class="line"><span class="meta"></span></div><div class="line">#转化单个图片的函数</div><div class="line">function convertPic()&#123;</div><div class="line">	name=$&#123;input##*/&#125;</div><div class="line">	echo $name;</div><div class="line">	c=$&#123;name%.*&#125;</div><div class="line">	echo $c</div><div class="line">	./cwebp -lossless $input -o $output/$c.webp </div><div class="line">	exit 0;</div><div class="line">&#125;</div><div class="line"><span class="meta"></span></div><div class="line">#转化文件夹下多个图片(只转化png格式的图片，其他格式(jpg，gif，.9图片)只是拷贝到指定输出的目录下)</div><div class="line">function convertPicDirectory()&#123;</div><div class="line">	for a in $input/*</div><div class="line">	do</div><div class="line">	echo "a="$a</div><div class="line">	b=$&#123;a##*/&#125;</div><div class="line">	c=$&#123;b%.*&#125;</div><div class="line">	echo "b="$b</div><div class="line">	echo "c="$c</div><div class="line">	echo "----------------"</div><div class="line">	if [[ $c == *\.9 ]];</div><div class="line">	then cp $a $output/$b</div><div class="line">	elif [[ $b == *\.jpg ]];</div><div class="line">	then cp $a $output/$b</div><div class="line">	elif [[ $b == *\.gif ]];</div><div class="line">	then cp $a $output/$b</div><div class="line">	else</div><div class="line">	./cwebp -lossless $a -o $output/$c.webp </div><div class="line">	fi</div><div class="line">	done</div><div class="line">	exit 0;</div><div class="line">&#125;</div><div class="line"><span class="meta">#</span>判断输入的路径是否存在</div><div class="line">if [ -e "$input" ];</div><div class="line">then echo "\n$input: is exist"</div><div class="line">else</div><div class="line">echo "\nNo such file or directory"</div><div class="line">fi</div><div class="line"><span class="meta"></span></div><div class="line">#判断输入的路径是否存在且为文件夹</div><div class="line">if [ -d "$input" ];</div><div class="line">then </div><div class="line"><span class="meta">#</span>如果是正确的文件夹，则开始遍历文件夹做转换操作</div><div class="line">echo "This is correct directory"</div><div class="line"><span class="meta">#</span>调用函数开始转换</div><div class="line">convertPicDirectory;</div><div class="line"><span class="meta"></span></div><div class="line">#不是文件夹</div><div class="line">else</div><div class="line"><span class="meta">#</span>调用函数开始转换单个图片文件</div><div class="line">convertPic;</div><div class="line">echo "\nThis is not directory"</div><div class="line">fi</div></pre></td></tr></table></figure>
+<p>ok，到这里，目前的webp转化小脚本到此为止啦~虽然还有很多不足，例如：</p>
+<p>1.不支持文件夹下的递归遍历、转化操作。</p>
+<p>2.只是单一的支持png的无损压缩。</p>
+<p>3.……</p>
+<p>下面附上个人这个小工具的GitHub地址：<a href="https://github.com/lianyuchen/WebpConvertTool" target="_blank" rel="external">https://github.com/lianyuchen/WebpConvertTool</a></p>
+<p>希望大家多多star，给我点鼓励~</p>
+
+            
+        
+        </div>
+        
+            
+            
+    <hr class="copy-line">
+    <div class="post-copyright">
+        <div class="copy-author">
+            <span>作者 :</span>
+            <span>Lian Yuchen(ShadowHappiness)</span>
+        </div>
+        <div class="copy-url">
+            <span>地址 :</span>
+            <a href="http://lianyuchen.github.io/2017/06/22/自己开发WebP批量转化工具/">http://lianyuchen.github.io/2017/06/22/自己开发WebP批量转化工具/</a>
+        </div>
+        <div class="copy-origin">
+            <span>来源 :</span>
+            <a href="http://lianyuchen.github.io">http://lianyuchen.github.io</a>
+        </div>
+        <div class="copy-license">
+            
+            著作权归作者所有，转载请联系作者获得授权。
+        </div>
+    </div>
+
+        
+    </article>
+    
+        
+    <nav class="article-page">
+        
+        
+            <a href="/2017/06/07/Java内存泄露/" id="art-right" class="art-left">
+                <span class="prev-title"> 
+                    <i class="iconfont icon-left"></i>Java内存泄露
+                </span>
+            </a>
+        
+    </nav>
+
+        
+    
+
+
+        </main>
+        <footer class="footer syuanpi fadeIn" id="footer">
+    <hr>
+    <div class="footer-wrapper">
+        <div class="left">
+            <div class="contact-icon">
+    
+    
+    
+    
+    
+    
+    
+    
+        
+            <a href="https://github.com/lianyuchen" class="iconfont icon-github" title="github"></a>
+        
+        
+        
+        
+        
+        
+        
+    
+</div>
+        </div>
+        <div class="right">
+            <div class="copyright">
+    <div class="info">
+        <span>&copy;</span>
+        <span>2015 ~ 2017</span>
+        <span>❤</span>
+        <span>Lian Yuchen(ShadowHappiness)</span>
+    </div>
+    <div class="theme">
+        <span>
+            动力来源于
+            <a href="http://hexo.io/" target="_blank">Hexo </a>
+        </span>
+        <span>
+            主题
+            <a href="https://github.com/ColMugX/hexo-theme-Nlvi"> Nlvi </a>
+        </span>
+    </div>
+    
+    <div class="visit_count">
+        <i class="iconfont icon-visit"></i>
+        <span id="busuanzi_value_site_uv"></span>
+        <i class="iconfont icon-people"></i>
+        <span id="busuanzi_value_site_pv"></span>
+    </div>
+    
+</div>
+        </div>
+    </div>
+</footer>
+    </div>
+    <script src="/script/nlvi.js"></script>
+
+    <script src="/lightbox/js/lightbox.min.js"></script>
+
+<script>
+$(document).ready(function(){
+    document.body.addEventListener('touchstart', function () {});
+    $('.progress').hide();
+    $('.body').show();
+    Nlvi.tagcloud();
+    Nlvi.back2top();
+    Nlvi.showComments();
+    Nlvi.showReward()
+
+    !CONFIG.animate && Nlvi.offAnimate();
+    CONFIG.lightbox && Nlvi.onPicBox();
+})
+</script>
+    </div>
+    <div class="backtop syuanpi dead" id="backtop">
+    <i class="iconfont icon-up"></i>
+</div>
+</body>
+</html>
