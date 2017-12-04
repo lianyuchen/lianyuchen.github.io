@@ -1,0 +1,368 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <title> RxJava2源码解析系列——1.使用流程解析 · Lian Yuchen </title>
+    <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+<link rel="stylesheet" href="/style/style.css">
+<script src="/script/jquery.min.js"></script>
+<script>
+    var CONFIG = {
+        title: "Lian Yuchen",
+        author: "Lian Yuchen(ShadowHappiness)",
+        lightbox: true,
+        animate: true
+    }
+</script>
+
+
+
+    <link rel="stylesheet" href="/lightbox/css/lightbox.min.css">
+
+
+
+
+    <link rel="stylesheet" href="/syuanpi/syuanpi.min.css">
+
+
+
+
+
+
+
+
+
+    <script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+</head>
+<body>
+    <div class="progress">
+    <div class="progress-inner"></div>
+</div>
+    <div class="body">
+    <div class="tagcloud" id="tagcloud">
+    <div class="tagcloud-inner">
+        <a href="/tags/Android/" style="font-size: 14px;">Android</a> <a href="/tags/Android-Studio/" style="font-size: 14px;">Android Studio</a> <a href="/tags/Java/" style="font-size: 14px;">Java</a> <a href="/tags/Jenkins/" style="font-size: 14px;">Jenkins</a> <a href="/tags/Linux/" style="font-size: 14px;">Linux</a> <a href="/tags/MVP/" style="font-size: 14px;">MVP</a> <a href="/tags/Mac/" style="font-size: 14px;">Mac</a> <a href="/tags/OkHttp/" style="font-size: 14px;">OkHttp</a> <a href="/tags/RecyclerView/" style="font-size: 14px;">RecyclerView</a> <a href="/tags/Retrofit/" style="font-size: 14px;">Retrofit</a> <a href="/tags/RxJava/" style="font-size: 14px;">RxJava</a> <a href="/tags/Sonar/" style="font-size: 14px;">Sonar</a> <a href="/tags/java/" style="font-size: 14px;">java</a> <a href="/tags/keystore/" style="font-size: 14px;">keystore</a> <a href="/tags/shape/" style="font-size: 14px;">shape</a> <a href="/tags/内存泄露/" style="font-size: 14px;">内存泄露</a> <a href="/tags/动画/" style="font-size: 14px;">动画</a> <a href="/tags/属性动画/" style="font-size: 14px;">属性动画</a> <a href="/tags/开发工具/" style="font-size: 14px;">开发工具</a> <a href="/tags/开发环境/" style="font-size: 14px;">开发环境</a> <a href="/tags/快捷键/" style="font-size: 14px;">快捷键</a> <a href="/tags/打包/" style="font-size: 14px;">打包</a> <a href="/tags/框架/" style="font-size: 14px;">框架</a> <a href="/tags/毕设/" style="font-size: 14px;">毕设</a> <a href="/tags/源码解析/" style="font-size: 14px;">源码解析</a> <a href="/tags/第三方分享/" style="font-size: 14px;">第三方分享</a> <a href="/tags/签名/" style="font-size: 14px;">签名</a> <a href="/tags/网络/" style="font-size: 14px;">网络</a>
+    </div>
+</div>
+    <header class="header" id="header">
+    <div class="title syuanpi tvIn">
+    <div class="table">
+        <div class="connect">
+            <div class="connect-inner">
+                <span><a href="/">Lian Yuchen</a></span>
+                
+                    <span id="subtitle">坚持当前所做的事！</span>
+                
+            </div>
+        </div>
+    </div>
+</div>
+    <nav class="main-nav syuanpi tvIn">
+<div class="table">
+
+    <ul class="menu">
+        
+        
+            <li class="menu-item">
+                <a href="/">
+                    <span>文章</span>
+                    
+                        <span class="menu-item-label">article</span>
+                    
+                </a>
+            </li>
+        
+        
+        
+            <li class="menu-item">
+                <a href="/archives">
+                    <span>归档</span>
+                    
+                        <span class="menu-item-label">archives</span>
+                    
+                </a>
+            </li>
+        
+        
+        
+            <li class="menu-item">
+                <a href="javascript:;" id="tags">
+                    <span>标签</span>
+                    
+                        <span class="menu-item-label">tags</span>
+                    
+                </a>
+            </li>
+        
+        
+        
+            <li class="menu-item">
+                <a href="/about">
+                    <span>关于</span>
+                    
+                        <span class="menu-item-label">about</span>
+                    
+                </a>
+            </li>
+        
+        
+    </ul>
+
+</div>
+</nav>
+<div class="mobile-nav"></div>
+</header>
+    <div class="container">
+        <main class="main" id="main">
+            
+    
+    <article class="post">
+        <header class="post-header">
+            <div class="post-time syuanpi riseIn-light back-1">
+                <span>2017年7月30日</span>
+            </div>
+            <h1 class="post-title syuanpi riseIn-light back-2">
+            
+                RxJava2源码解析系列——1.使用流程解析
+            
+            </h1>
+            
+                
+                    <div class="post-tags syuanpi riseIn-light back-3">
+                    
+                        <a href="/tags/Android/">Android</a>
+                    
+                        <a href="/tags/RxJava/">RxJava</a>
+                    
+                    </div>
+                
+            
+        </header>
+        <div class="post-content syuanpi riseIn-light back-3">
+            
+                <h3 id="概述"><a href="#概述" class="headerlink" title="概述"></a>概述</h3><p>Rx系列现在火遍全球，网上也纷纷涌现各类教程、博客。作为一个Android开发人员，我认为掌握RxJava已经成为了一项必不可少的专业技能，然而一眛的去看网上已有的教程和博客，并不能让自己深入理解RxJava，于是有了本系列，也当作为自己的一个总结。本系列章节打算从最常见的使用开始，然后进入源码具体分析。<br><a id="more"></a></p>
+<h3 id="使用"><a href="#使用" class="headerlink" title="使用"></a>使用</h3><p>最简单的使用RxJava的一个例子，我们需要三个元素</p>
+<ol>
+<li>Observable（被观察者）</li>
+<li>Observer（观察者）</li>
+<li>subscribe（订阅关系）</li>
+</ol>
+<p>废话不多说，就是上代码</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div></pre></td><td class="code"><pre><div class="line">Observable.create(<span class="keyword">new</span> ObservableOnSubscribe&lt;String&gt;() &#123;</div><div class="line">            <span class="meta">@Override</span></div><div class="line">            <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">subscribe</span><span class="params">(@NonNull ObservableEmitter&lt;String&gt; e)</span> <span class="keyword">throws</span> Exception </span>&#123;</div><div class="line">                Log.d(TAG, <span class="string">"subscribe"</span>);</div><div class="line">                e.onNext(<span class="string">"This is String"</span>);</div><div class="line">                e.onNext(<span class="string">"This is String"</span>);</div><div class="line">                e.onComplete();</div><div class="line">            &#125;</div><div class="line">        &#125;)</div><div class="line">                .subscribe(<span class="keyword">new</span> Observer() &#123;</div><div class="line">                    <span class="meta">@Override</span></div><div class="line">                    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onSubscribe</span><span class="params">(@NonNull <span class="keyword">final</span> Disposable d)</span> </span>&#123;</div><div class="line">                        Log.d(TAG, <span class="string">"onSubScribe"</span>);</div><div class="line">                    &#125;</div><div class="line"></div><div class="line">                    <span class="meta">@Override</span></div><div class="line">                    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onNext</span><span class="params">(@NonNull Object o)</span> </span>&#123;</div><div class="line">                        Log.d(TAG, <span class="string">"onNext"</span>);</div><div class="line"></div><div class="line">                    &#125;</div><div class="line"></div><div class="line">                    <span class="meta">@Override</span></div><div class="line">                    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onError</span><span class="params">(@NonNull Throwable e)</span> </span>&#123;</div><div class="line">                        Log.d(TAG, <span class="string">"onError"</span>);</div><div class="line">                    &#125;</div><div class="line"></div><div class="line">                    <span class="meta">@Override</span></div><div class="line">                    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onComplete</span><span class="params">()</span> </span>&#123;</div><div class="line">                        Log.d(TAG, <span class="string">"onComplete"</span>);</div><div class="line">                    &#125;</div><div class="line">                &#125;);</div></pre></td></tr></table></figure>
+<p>1.首先我们需要创建Observable，创建Observable的操作符有很多，这里不一一写出，本文中先使用create操作符创建Observable对象。我们来看一下create方法：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="meta">@CheckReturnValue</span></div><div class="line"><span class="meta">@SchedulerSupport</span>(SchedulerSupport.NONE)</div><div class="line"><span class="keyword">public</span> <span class="keyword">static</span> &lt;T&gt; <span class="function">Observable&lt;T&gt; <span class="title">create</span><span class="params">(ObservableOnSubscribe&lt;T&gt; source)</span> </span>&#123;</div><div class="line">    ObjectHelper.requireNonNull(source, <span class="string">"source is null"</span>);</div><div class="line">    <span class="keyword">return</span> RxJavaPlugins.onAssembly(<span class="keyword">new</span> ObservableCreate&lt;T&gt;(source));</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<blockquote>
+<ol>
+<li>create方法中需要一个ObservableOnSubscribe<t>类型参数</t></li>
+<li>方法中最先使用ObjectHelper做了一次判空处理。</li>
+<li>使用RxJavaPlugins做了某些事情</li>
+</ol>
+</blockquote>
+<p><img src="http://otcbfi8zx.bkt.clouddn.com/blog/170719/D2ijKFGA7K.png?imageslim" alt="mark"></p>
+<p>ObservableOnSubscribe<t>是一个接口，因此需要实现当中的subscribe方法，而subscribe方法中存在ObservableEmitter<t>类型的参数。</t></t></p>
+<p><img src="http://otcbfi8zx.bkt.clouddn.com/blog/170719/K99aDLm1L6.png?imageslim" alt="mark"></p>
+<p><img src="http://otcbfi8zx.bkt.clouddn.com/blog/170719/l1H2BGb3Cl.png?imageslim" alt="mark"></p>
+<p>ObservableEmitter<t>继承Emitter<t>接口，Emitter<t>接口中定义了我们熟知的onNext、onError、onComplete方法。</t></t></t></p>
+<p>ObjectHelper是个工具类，在这就不多说了。</p>
+<p><img src="http://otcbfi8zx.bkt.clouddn.com/blog/170719/KmE0IC0de0.png?imageslim" alt="mark"></p>
+<p>RxJavaPlugins顾名思义，应该叫做插件类，具体的作用后续再做详解，这里大概说明一下，该类的onAssembly方法跟hook相关。而这里hook不影响我们主流程，因此传进去什么参数就返回什么（我们这里传进去的是ObservableCreate<t>对象），<strong>在ObservableCreate<t>中定义了具体订阅时的逻辑以及发射器的逻辑。</t></strong></t></p>
+<p><strong>从这个流程我们看出，当我们使用create操作符创建一个Observable时，我们需要传入一个实现了ObservableOnSubscribe<t>接口的对象，在这个实现中，存在发射器ObservableEmitter<t>，通过它可以让使用者自由定义数据流向。并且在create操作符过程中，ObservableOnSubscribe<t>对象与ObservableCreate<t>相关联。</t></t></t></t></strong></p>
+<p>2.接下来我们需要创建Observer，Observer是个接口，因此我们只需要实现该接口即可。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">new</span> Observer() &#123;</div><div class="line">                    <span class="meta">@Override</span></div><div class="line">                    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onSubscribe</span><span class="params">(@NonNull <span class="keyword">final</span> Disposable d)</span> </span>&#123;</div><div class="line">                        Log.d(TAG, <span class="string">"onSubScribe"</span>);</div><div class="line">                    &#125;</div><div class="line"></div><div class="line">                    <span class="meta">@Override</span></div><div class="line">                    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onNext</span><span class="params">(@NonNull Object o)</span> </span>&#123;</div><div class="line">                        Log.d(TAG, <span class="string">"onNext"</span>);</div><div class="line"></div><div class="line">                    &#125;</div><div class="line"></div><div class="line">                    <span class="meta">@Override</span></div><div class="line">                    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onError</span><span class="params">(@NonNull Throwable e)</span> </span>&#123;</div><div class="line">                        Log.d(TAG, <span class="string">"onError"</span>);</div><div class="line">                    &#125;</div><div class="line"></div><div class="line">                    <span class="meta">@Override</span></div><div class="line">                    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onComplete</span><span class="params">()</span> </span>&#123;</div><div class="line">                        Log.d(TAG, <span class="string">"onComplete"</span>);</div><div class="line">                    &#125;</div><div class="line">                &#125;</div></pre></td></tr></table></figure>
+<p>创建Observer很简单，实现接口当中定义的4个方法即可。</p>
+<blockquote>
+<ol>
+<li>onSubscribe(@NonNull final Disposable d),当订阅时会回调该方法，Disposable 用来取消订阅关系。</li>
+<li>onNext(@NonNull Object o)，发射数据</li>
+<li>onComplete()，当onNext方法全部执行完毕，执行该方法。</li>
+<li>onError(@NonNull Throwable e)，当数据流向出现问题或使用者自己调用时执行。</li>
+</ol>
+</blockquote>
+<p>3.完成订阅过程，首先我们来看看如何完成订阅的。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">observable.subscribe(observer)</div></pre></td></tr></table></figure>
+<p>当我们使用创建操作符create创建Observable时，还记得create方法返回的是什么类型吗？ok，就是Observable类型，但具体的实现类是ObservableCreate<t>。</t></p>
+<p>进入Observable的subscribe方法看看：</p>
+<p><img src="http://otcbfi8zx.bkt.clouddn.com/blog/170719/8JCDjfc0Lf.png?imageslim" alt="mark"></p>
+<blockquote>
+<ol>
+<li>判空处理</li>
+<li>hook相关</li>
+<li>执行subscribeActual(observer)</li>
+<li>抛出异常</li>
+</ol>
+</blockquote>
+<p>在这4个流程当中，subscribeActual(observer)方法才是我们应该关注的。在Observable类中，subscribeActual(observer)是个抽象方法，因此我们需要寻找它的具体实现。上面已经提到使用create操作符，具体的实现类是ObservableCreate<t>。</t></p>
+<p><img src="http://otcbfi8zx.bkt.clouddn.com/blog/170719/5bdA8ibHIl.png?imageslim" alt="mark"></p>
+<p>在ObservableCreate<t>类的subscribeActual(observer)中，所声明的方法参数便是我们外部传进来的实现Observer接口的对象。</t></p>
+<blockquote>
+<ol>
+<li>将Observer（观察者）与发射器相关联</li>
+<li>调用observer的onSubscribe方法，为了方便观察者可随时解除订阅关系。</li>
+<li><strong>执行使用者自定义的subscribe方法中的逻辑，同时也将发射器与Observable（被观察者）做关联</strong></li>
+<li>发生异常，回调onError</li>
+</ol>
+</blockquote>
+<p>因此，当执行到subscribeActual(observer)时，才是真正的订阅。</p>
+<p>而当执行到</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">source.subscribe(parent);</div></pre></td></tr></table></figure>
+<p>将ObservableOnSubscribe（源头）与CreateEmitter（Observer，终点）联系起来。</p>
+<p>这里的souce就是</p>
+<p><img src="http://otcbfi8zx.bkt.clouddn.com/blog/170719/H3a663719F.png?imageslim" alt="mark"></p>
+<p>这里的parent就是 CreateEmitter<t>。因此，会执行parent.onNext(), parent.onComplete(),parent.onError()</t></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">static</span> <span class="keyword">final</span> <span class="class"><span class="keyword">class</span> <span class="title">CreateEmitter</span>&lt;<span class="title">T</span>&gt;</span></div><div class="line">    <span class="keyword">extends</span> <span class="title">AtomicReference</span>&lt;<span class="title">Disposable</span>&gt;</div><div class="line">    <span class="keyword">implements</span> <span class="title">ObservableEmitter</span>&lt;<span class="title">T</span>&gt;, <span class="title">Disposable</span> &#123;</div><div class="line">  </div><div class="line">        <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">long</span> serialVersionUID = -<span class="number">3434801548987643227L</span>;</div><div class="line">        <span class="keyword">final</span> Observer&lt;? <span class="keyword">super</span> T&gt; observer;</div><div class="line">  </div><div class="line">        CreateEmitter(Observer&lt;? <span class="keyword">super</span> T&gt; observer) &#123;</div><div class="line">            <span class="keyword">this</span>.observer = observer;</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        <span class="meta">@Override</span></div><div class="line">        <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onNext</span><span class="params">(T t)</span> </span>&#123;</div><div class="line">			...</div><div class="line">            <span class="keyword">if</span> (!isDisposed()) &#123;</div><div class="line">                observer.onNext(t);</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        <span class="meta">@Override</span></div><div class="line">        <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onError</span><span class="params">(Throwable t)</span> </span>&#123;</div><div class="line">            <span class="keyword">if</span> (!tryOnError(t)) &#123;</div><div class="line">                RxJavaPlugins.onError(t);</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        <span class="meta">@Override</span></div><div class="line">        <span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">tryOnError</span><span class="params">(Throwable t)</span> </span>&#123;</div><div class="line">			...</div><div class="line">            <span class="keyword">if</span> (!isDisposed()) &#123;</div><div class="line">                <span class="keyword">try</span> &#123;</div><div class="line">                    observer.onError(t);</div><div class="line">                &#125; <span class="keyword">finally</span> &#123;</div><div class="line">                    dispose();</div><div class="line">                &#125;</div><div class="line">                <span class="keyword">return</span> <span class="keyword">true</span>;</div><div class="line">            &#125;</div><div class="line">            <span class="keyword">return</span> <span class="keyword">false</span>;</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        <span class="meta">@Override</span></div><div class="line">        <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onComplete</span><span class="params">()</span> </span>&#123;</div><div class="line">            <span class="keyword">if</span> (!isDisposed()) &#123;</div><div class="line">                <span class="keyword">try</span> &#123;</div><div class="line">                    observer.onComplete();</div><div class="line">                &#125; <span class="keyword">finally</span> &#123;</div><div class="line">                    dispose();</div><div class="line">                &#125;</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">		...</div><div class="line">    &#125;</div></pre></td></tr></table></figure>
+<p>到这，最简单的一个使用RxJava的流程就结束了。</p>
+<h3 id="最后总结"><a href="#最后总结" class="headerlink" title="最后总结"></a>最后总结</h3><h4 id="1-创建Observable过程"><a href="#1-创建Observable过程" class="headerlink" title="1.创建Observable过程"></a>1.创建Observable过程</h4><blockquote>
+<ol>
+<li>需要传入一个实现了ObservableOnSubscribe<t>接口的对象</t></li>
+<li>在ObservableOnSubscribe<t>实现中，通过ObservableEmitter<t>可以让使用者自由定义数据流向</t></t></li>
+<li>create操作符过程中，采用适配器模式，将ObservableOnSubscribe<t>通过ObservableCreate<t>适配为Observable<t>对象，让ObservableOnSubscribe<t>与ObservableCreate<t>相关联</t></t></t></t></t></li>
+</ol>
+</blockquote>
+<h4 id="2-订阅过程"><a href="#2-订阅过程" class="headerlink" title="2.订阅过程"></a>2.订阅过程</h4><blockquote>
+<ol>
+<li>真正订阅的方法在subscribeActual(Observer&lt;? super T&gt; observer)</li>
+<li>source.subscribe(parent);  这行代码执行时，才开始发射数据，在ObservableOnSubscribe<t>中通过ObservableEmitter<t>发送数据给Observer</t></t></li>
+<li>当Observable与Observer订阅关系被dispose时，不会执行onXXX方法。</li>
+<li>Observer 的 onComplete() 和 onError() <strong>互斥只能执行一次</strong>，因为CreateEmitter 在回调他们两中任意一个后，都会自动 dispose()。</li>
+<li>先 error 后 complete，complete 不显示。 反之会 crash</li>
+<li>还有一点要注意的是 <strong>onSubscribe()</strong> 是在我们执行 subscribe() 这句代码的那个线程回调的，并<strong>不受线程调度影响</strong></li>
+</ol>
+</blockquote>
+
+            
+        
+        </div>
+        
+            
+            
+    <hr class="copy-line">
+    <div class="post-copyright">
+        <div class="copy-author">
+            <span>作者 :</span>
+            <span>Lian Yuchen(ShadowHappiness)</span>
+        </div>
+        <div class="copy-url">
+            <span>地址 :</span>
+            <a href="http://lianyuchen.github.io/2017/07/30/RxJava2源码解析系列——1.使用流程解析/">http://lianyuchen.github.io/2017/07/30/RxJava2源码解析系列——1.使用流程解析/</a>
+        </div>
+        <div class="copy-origin">
+            <span>来源 :</span>
+            <a href="http://lianyuchen.github.io">http://lianyuchen.github.io</a>
+        </div>
+        <div class="copy-license">
+            
+            著作权归作者所有，转载请联系作者获得授权。
+        </div>
+    </div>
+
+        
+    </article>
+    
+        
+    <nav class="article-page">
+        
+            <a href="/2017/12/04/Jenkins 打包流程简述/" id="art-left" class="art-right">
+                <span class="next-title">
+                    Jenkins 打包流程简述<i class="iconfont icon-right"></i> 
+                </span>
+            </a>
+        
+        
+            <a href="/2017/06/22/自己开发WebP批量转化工具/" id="art-right" class="art-left">
+                <span class="prev-title"> 
+                    <i class="iconfont icon-left"></i>自己开发WebP批量转化工具
+                </span>
+            </a>
+        
+    </nav>
+
+        
+    
+
+
+        </main>
+        <footer class="footer syuanpi fadeIn" id="footer">
+    <hr>
+    <div class="footer-wrapper">
+        <div class="left">
+            <div class="contact-icon">
+    
+    
+    
+    
+    
+    
+    
+    
+        
+            <a href="https://github.com/lianyuchen" class="iconfont icon-github" title="github"></a>
+        
+        
+        
+        
+        
+        
+        
+    
+</div>
+        </div>
+        <div class="right">
+            <div class="copyright">
+    <div class="info">
+        <span>&copy;</span>
+        <span>2015 ~ 2017</span>
+        <span>❤</span>
+        <span>Lian Yuchen(ShadowHappiness)</span>
+    </div>
+    <div class="theme">
+        <span>
+            动力来源于
+            <a href="http://hexo.io/" target="_blank">Hexo </a>
+        </span>
+        <span>
+            主题
+            <a href="https://github.com/ColMugX/hexo-theme-Nlvi"> Nlvi </a>
+        </span>
+    </div>
+    
+    <div class="visit_count">
+        <i class="iconfont icon-visit"></i>
+        <span id="busuanzi_value_site_uv"></span>
+        <i class="iconfont icon-people"></i>
+        <span id="busuanzi_value_site_pv"></span>
+    </div>
+    
+</div>
+        </div>
+    </div>
+</footer>
+    </div>
+    <script src="/script/nlvi.js"></script>
+
+    <script src="/lightbox/js/lightbox.min.js"></script>
+
+<script>
+$(document).ready(function(){
+    document.body.addEventListener('touchstart', function () {});
+    $('.progress').hide();
+    $('.body').show();
+    Nlvi.tagcloud();
+    Nlvi.back2top();
+    Nlvi.showComments();
+    Nlvi.showReward()
+
+    !CONFIG.animate && Nlvi.offAnimate();
+    CONFIG.lightbox && Nlvi.onPicBox();
+})
+</script>
+    </div>
+    <div class="backtop syuanpi dead" id="backtop">
+    <i class="iconfont icon-up"></i>
+</div>
+</body>
+</html>

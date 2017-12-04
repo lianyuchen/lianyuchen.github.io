@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
-    <title> 毕业设计--“日程盒子” · Lian Yuchen </title>
+    <title> Jenkins 打包流程简述 · Lian Yuchen </title>
     <meta charset="UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=edge" />
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
@@ -124,22 +124,22 @@
     <article class="post">
         <header class="post-header">
             <div class="post-time syuanpi riseIn-light back-1">
-                <span>2016年3月29日</span>
+                <span>2017年12月4日</span>
             </div>
             <h1 class="post-title syuanpi riseIn-light back-2">
             
-                毕业设计--“日程盒子”
+                Jenkins 打包流程简述
             
             </h1>
             
                 
                     <div class="post-tags syuanpi riseIn-light back-3">
                     
-                        <a href="/tags/框架/">框架</a>
+                        <a href="/tags/Android/">Android</a>
                     
-                        <a href="/tags/MVP/">MVP</a>
+                        <a href="/tags/打包/">打包</a>
                     
-                        <a href="/tags/毕设/">毕设</a>
+                        <a href="/tags/Jenkins/">Jenkins</a>
                     
                     </div>
                 
@@ -147,54 +147,48 @@
         </header>
         <div class="post-content syuanpi riseIn-light back-3">
             
-                <p>基于Android平台的“日程盒子”应用开发，包括服务器端和客户端两部分。</p>
-<blockquote>
-<p>服务器端负责提供该系统的基础功能，接收、处理、存储系统数据。</p>
-</blockquote>
-<ul>
-<li>1.管理员模块，有登陆功能，实现与客户端的交互。</li>
-<li>2.用户登陆注册模块，实现用户登陆注册的逻辑代码。</li>
-<li>3.今日日程模块，接收客户端传来的相应日程，做数据库操作。</li>
-<li>4.统计分析模块，接收客户端传来的数据，对一系列数据做算法处理。</li>
-<li>5.其他功能模块类似，均是做数据库操作。</li>
-</ul>
+                <p>前言：有一段时间没更新博客内容，发现自己的知识并不能很好的沉淀下来。这段时间会好好努力让自己沉淀一下，分享一下最近自己在看、在学的一些内容。jenkins打包这块其实很早开始就在接触使用了，但是有一次突然需要重新对一个项目进行jenkins建立打包，才发现也花费了不少时间。于是乎，在这写篇文件记录一下。</p>
 <a id="more"></a>
-<blockquote>
-<p>客户端则为Android手机用户提供日程管理的相关功能，主要分为以下几部分：</p>
-</blockquote>
-<ul>
-<li>1.用户登录注册模块，除基本功能外，为实现对用户信息的保护有邮箱激活或绑定手机功能；</li>
-<li>2.今日日程模块和查看日历模块，可以实现日程的编辑和设置，有日历界面，点击日期可以实现查看当天的日程或者添加当天的日程。</li>
-<li>3.统计分析模块，可以通过一定的算法实现对用户日程完成率的统计，并有简单的提示语。</li>
-<li>4.心情记录模块，实现类似日记本的功能，把每时每刻的心情记录下来。</li>
-<li>5.心情分享模块，在记录心情的同时可以把心情分享到朋友圈、空间、微博等。</li>
-<li>6.统计提醒功能，根据相关数据的统计的结果给出用户相关的提醒和行为指导。</li>
-<li>7.消息推送功能，根据需要可以报相关消息推送给用户。</li>
-</ul>
-<blockquote>
-<p>技术实现：</p>
-</blockquote>
-<ul>
-<li>网络请求：采用Google官方开源网络请求库Volley，进行二次封装。</li>
-<li>数据传输：android端与服务器端交互采用Json数据格式，使用阿里开源库FastJson进行解析</li>
-<li>数据库：<ol>
-<li>服务器端使用mysql作为数据库，使用Jdbc进行web项目与数据库的连接。</li>
-<li>Android端采用sqlite数据库，存储从服务器端上拉取的持久化数据。</li>
+<h3 id="一、git仓库"><a href="#一、git仓库" class="headerlink" title="一、git仓库"></a>一、git仓库</h3><p>本地代码与gitlab（github）远程仓库做关联，并将代码上传至代码仓库。</p>
+<h3 id="二、jenkins的配置"><a href="#二、jenkins的配置" class="headerlink" title="二、jenkins的配置"></a>二、jenkins的配置</h3><p>新建jenkins项目空间，进入配置界面，如下图：</p>
+<p><img src="https://ws2.sinaimg.cn/large/006tNc79ly1fm4pyg8llgj31kw0m0ad5.jpg" alt=""></p>
+<ol>
+<li>配置git仓库URL</li>
+<li>选择分支</li>
 </ol>
+<p><img src="https://ws1.sinaimg.cn/large/006tNc79ly1fm4q3myjqyj31gq0nedj7.jpg" alt=""></p>
+<p>在构建栏中，完善需要执行的shell脚本。</p>
+<h3 id="三、jenkins常见问题"><a href="#三、jenkins常见问题" class="headerlink" title="三、jenkins常见问题"></a>三、jenkins常见问题</h3><ol>
+<li><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">&gt; Could not resolve all dependencies for configuration &apos;:classpath&apos;.</div><div class="line">   &gt; Could not find com.android.tools.build:gradle:3.0.0.</div></pre></td></tr></table></figure>
 </li>
-<li>项目架构：android使用MVP设计模式，服务器端使用MVC设计模式。做到结构层次清晰。</li>
-</ul>
-<blockquote>
-<p>服务器端项目分层截图：</p>
-</blockquote>
-<p><img src="http://upload-images.jianshu.io/upload_images/1790711-c3f5727eddb98bf6.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt=""></p>
-<p>表示本人没学习过SSH框架，只是了解过，但是由于时间原因在毕设中另外耗费时间学习SSH，成本太高，希望大牛多多包涵～</p>
-<blockquote>
-<p>Android端项目分层截图：</p>
-</blockquote>
-<p><img src="http://upload-images.jianshu.io/upload_images/1790711-2ac98e435106bdab.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt=""></p>
-<p>目前为止，该毕设还没完成，我会努力每天都提交一点代码。</p>
-<p>Android客户端代码先上传至Github，服务器端稍后也会上传至Github，新人学习，还望多多指教！希望大牛点个星★，也让我有学习的动力～～<br>Android端日程盒子：<a href="https://github.com/lianyuchen/ScheduleBox" target="_blank" rel="external">https://github.com/lianyuchen/ScheduleBox</a></p>
+</ol>
+<p><img src="https://ws2.sinaimg.cn/large/006tNc79ly1fm4ojdarnnj30p2087ab9.jpg" alt=""></p>
+<p><strong>解答：</strong> 这个问题是gradle3.0插件依赖未成功加载导致的，在buildscript的repositories中加入google仓库</p>
+<p><img src="https://ws1.sinaimg.cn/large/006tNc79ly1fm4qlylttzj31540e8dhj.jpg" alt=""></p>
+<ol>
+<li><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">&gt; You have not accepted the license agreements of the following SDK components:</div><div class="line">  [Android SDK Build-Tools 26.0.2].</div></pre></td></tr></table></figure>
+<p><img src="https://ws1.sinaimg.cn/large/006tNc79ly1fm4okjvxy7j30q5070q45.jpg" alt=""></p>
+<p><strong>解答：</strong>在执行脚本前加入</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">yes | $ANDROID_HOME/tools/bin/sdkmanager &quot;build-tools;26.0.2&quot;</div></pre></td></tr></table></figure>
+</li>
+<li><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">* What went wrong:</div><div class="line">Execution failed for task &apos;:common:processReleaseResources&apos;.</div><div class="line">&gt; com.android.ide.common.process.ProcessException: Failed to execute aapt</div></pre></td></tr></table></figure>
+</li>
+</ol>
+<p><img src="https://ws1.sinaimg.cn/large/006tNc79ly1fm4onfsxbqj30rh09a0ub.jpg" alt=""></p>
+<p><strong>解答：</strong>centOS中使用的glibc的版本过低，需要升级。</p>
+<ol>
+<li><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">Execution failed for task &apos;:app:validateSigningDebug&apos;.</div><div class="line">&gt; Keystore file /Users/lianyuchen/GitHub/ModuleApp/app/keystore.jks not found for signing config &apos;debug&apos;.</div></pre></td></tr></table></figure>
+</li>
+</ol>
+<p><img src="https://ws1.sinaimg.cn/large/006tNc79ly1fm4oop133tj30qn06vaar.jpg" alt=""></p>
+<p><strong>解答：</strong>未找到签名文件</p>
+<ol>
+<li><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">Execution failed for task &apos;:app:lintVitalRelease&apos;.</div><div class="line">&gt; Lint found fatal errors while assembling a release target.</div></pre></td></tr></table></figure>
+</li>
+</ol>
+<p><img src="https://ws1.sinaimg.cn/large/006tNc79ly1fm4opi7gk2j30ow0dv75m.jpg" alt=""></p>
+<p><strong>解答：</strong>执行release打包时，出现error就中断了打包。需要在 build.gradle 的 android{} 中增加：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">lintOptions &#123;</div><div class="line">        checkReleaseBuilds false</div><div class="line">        // Or, if you prefer, you can continue to check for errors in release builds,</div><div class="line">        // but continue the build even when errors are found:</div><div class="line">        abortOnError false</div><div class="line">&#125;</div></pre></td></tr></table></figure>
 
             
         
@@ -210,7 +204,7 @@
         </div>
         <div class="copy-url">
             <span>地址 :</span>
-            <a href="http://lianyuchen.github.io/2016/03/29/毕业设计-“日程盒子”/">http://lianyuchen.github.io/2016/03/29/毕业设计-“日程盒子”/</a>
+            <a href="http://lianyuchen.github.io/2017/12/04/Jenkins 打包流程简述/">http://lianyuchen.github.io/2017/12/04/Jenkins 打包流程简述/</a>
         </div>
         <div class="copy-origin">
             <span>来源 :</span>
@@ -228,16 +222,10 @@
         
     <nav class="article-page">
         
-            <a href="/2016/04/07/Android接入微信分享过程的喜和泪/" id="art-left" class="art-right">
-                <span class="next-title">
-                    Android接入微信分享过程的喜和泪<i class="iconfont icon-right"></i> 
-                </span>
-            </a>
         
-        
-            <a href="/2016/03/25/Studio中自动签名并打包/" id="art-right" class="art-left">
+            <a href="/2017/07/30/RxJava2源码解析系列——1.使用流程解析/" id="art-right" class="art-left">
                 <span class="prev-title"> 
-                    <i class="iconfont icon-left"></i>Android Studio中自动签名并打包
+                    <i class="iconfont icon-left"></i>RxJava2源码解析系列——1.使用流程解析
                 </span>
             </a>
         
